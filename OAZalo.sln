@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAZalo", "OAZalo\OAZalo.csproj", "{526A0DBE-4C03-44A8-A791-D65F636DB078}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAZaloDataAccess", "OAZaloDataAccess\OAZaloDataAccess.csproj", "{970AC424-446A-4676-86A4-D16658C421EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{526A0DBE-4C03-44A8-A791-D65F636DB078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{526A0DBE-4C03-44A8-A791-D65F636DB078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{526A0DBE-4C03-44A8-A791-D65F636DB078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{526A0DBE-4C03-44A8-A791-D65F636DB078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{970AC424-446A-4676-86A4-D16658C421EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{970AC424-446A-4676-86A4-D16658C421EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{970AC424-446A-4676-86A4-D16658C421EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{970AC424-446A-4676-86A4-D16658C421EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39972D80-D144-4567-BECE-B1BBB2F93C6E}
+	EndGlobalSection
+EndGlobal
