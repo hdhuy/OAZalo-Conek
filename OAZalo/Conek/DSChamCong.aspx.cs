@@ -21,7 +21,7 @@ namespace OAZalo.Conek
         string cong_ty = "";
         public LocalAPI localAPI = new LocalAPI();
         public List<hienThiChamCong> dsHienthi = new List<hienThiChamCong>();
-        public List<ChamCong> news = new List<ChamCong>();
+        //public List<ChamCong> news = new List<ChamCong>();
         public string message = "";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,18 +33,9 @@ namespace OAZalo.Conek
                 tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
                 den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
                 cong_ty = "Conek";
-                if (dsHienthi.Count > 0)
-                {
-                    ArrayList itemList = new ArrayList();
-                    foreach (hienThiChamCong chamcong in dsHienthi)
-                    {
-                        itemList.Add(chamcong.ten);
-                    }
-                    testnv.DataSource = itemList;
-                    testnv.DataBind();
-                }
                 BindData(null);
             }
+
         }
         protected void rdTuNgay_SelectedDateChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs e)
         {
@@ -73,16 +64,12 @@ namespace OAZalo.Conek
             tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
             den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
             cong_ty = rcbCongty.SelectedValue;
-            int index = testnv.SelectedIndex;
-            if (dsHienthi.Count > 0)
-            {
-                string ma_nhan_vien = dsHienthi[index].ma;
-                BindData(ma_nhan_vien);
-            }
-            else
-            {
-                message += "dsHienthi đã bị reset, đã chọn: ";
-            }
+            string ma_nhan_vien = rcbTennv.SelectedValue;
+            BindData(ma_nhan_vien);
+        }
+        protected void rcbTennv_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
         protected void rcbNhanvien_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -97,21 +84,25 @@ namespace OAZalo.Conek
             }
             else
             {
-                apiGetData = string.Format("/api/GetDataDiemDanh?function=aperson&id={3}&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay,nvid);
+                apiGetData = string.Format("/api/GetDataDiemDanh?function=aperson&id={3}&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay, nvid);
             }
             string myJson = Api.getDataObject("http://cloudapi.conek.vn", apiGetData);
             if (myJson != null)
             {
                 dsChamCong chamcongs = JsonConvert.DeserializeObject<dsChamCong>(myJson);
-                if (chamcongs != null && chamcongs.table.Count() > 0)
+                if (chamcongs != null)
                 {
                     string ma = "";
                     string ngay = "";
+                    ArrayList datasource = new ArrayList();
+                    if (chamcongs.table != null)
+                        if (chamcongs.table.Count() > 0)
+                            
                     foreach (ChamCong chamcong in chamcongs.table)
                     {
                         if (!chamcong.staffid.Equals(ma) && !chamcong.daytouch.Equals(ngay))
                         {
-                            
+
                         }
                         hienThiChamCong hienthi = new hienThiChamCong();
                         hienthi.ma = chamcong.staffid;
@@ -139,15 +130,19 @@ namespace OAZalo.Conek
                         //    //hienthi.ngaygiora = chamcong.daytouch + " " + dstrungngay[dstrungngay.Count - 1].timehours;
                         //}
                         hienthi.ngaygiovao = chamcong.daytouch + " " + chamcong.timehours;
-                        hienthi.ngaygiora = chamcong.daytouch + " " + chamcong.timehours;
+                        hienthi.ngaygiora =  chamcong.daytouch + " " + chamcong.timehours;
                         hienthi.muon = chamcong.timelate;
                         dsHienthi.Add(hienthi);
+                                datasource.Add(hienthi.ma);
                         ma = chamcong.staffid;
                         ngay = chamcong.daytouch;
                     }
+                    
+                    rcbTennv.DataSource = datasource;
+                    rcbTennv.DataBind();
                 }
             }
-            
+
         }
         protected void btExport_Click(object sender, EventArgs e)
         {
@@ -194,15 +189,15 @@ namespace OAZalo.Conek
             lstHeader.Add(new ExcelHeaderEntity { name = "Muộn (số phút)", colM = 1, rowM = 1, width = 20 });
             lstColumn.Add(new ExcelEntity { Name = "Muon", Align = XLAlignmentHorizontalValues.Left, Color = XLColor.Black, Type = "String" });
 
-            for (int i = 0; i < news.Count; i++)
+            for (int i = 0; i < dsHienthi.Count; i++)
             {
                 DataRow row = dt.NewRow();
-                row["Ma_Nhan_Vien"] = news[i].staffid;
-                row["Ho_Ten"] = news[i].staffname;
-                row["Bo_Phan"] = news[i].department;
-                row["Thoi_Gian_Vao"] = news[i].timehours;
-                row["Thoi_Gian_Ra"] = news[i].timehours;
-                row["Muon"] = news[i].timelate;
+                row["Ma_Nhan_Vien"] = dsHienthi[i].ma;
+                row["Ho_Ten"] = dsHienthi[i].ten;
+                row["Bo_Phan"] = dsHienthi[i].phongban;
+                row["Thoi_Gian_Vao"] = dsHienthi[i].ngaygiovao;
+                row["Thoi_Gian_Ra"] = dsHienthi[i].ngaygiora;
+                row["Muon"] = dsHienthi[i].muon;
                 dt.Rows.Add(row);
             }
             int rowHeaderStart = 6;

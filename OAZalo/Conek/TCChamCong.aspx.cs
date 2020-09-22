@@ -18,7 +18,7 @@ namespace OAZalo.Conek
 {
     public partial class TCChamCong : System.Web.UI.Page
     {
-        string ma_nhan_vien;
+        string ma_nhan_vien="";
         string tu_ngay = "";
         string den_ngay = "";
         string cong_ty = "";
@@ -48,25 +48,24 @@ namespace OAZalo.Conek
                 rdTuNgay.SelectedDate = DateTime.Now;
                 rdDenNgay.SelectedDate = DateTime.Now;
                 rcbCongty.SelectedValue = "Conek";
+
                 tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
                 den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
                 cong_ty = "Conek";
-            }
-            string uid = "0601435066976126";
-            string company = "Conek";
-            string fromday = "2020-09-01";
-            string today = "2020-09-15";
-            string data = string.Format("api/GetDataDiemDanh?function=aperson&id={0}&company={1}&fromday={2}&today={3}", uid,company,fromday,today);
-            //string apiGetData = "api/GetDataDiemDanh?function=aperson&id=0601435066976126&company=Conek&fromday=2020-09-01&today=2020-09-15";
-            string myJson = Api.getDataObject("http://cloudapi.conek.vn", data);
-            if (myJson != null)
-            {
-                dsChamCong nguoichamcong = JsonConvert.DeserializeObject<dsChamCong>(myJson);
-                if (nguoichamcong.table != null && nguoichamcong.table.Count() > 0)
+
+                string data = string.Format("api/GetDataDiemDanh?function=aperson&id={0}&company={1}&fromday={2}&today={3}", ma_nhan_vien, cong_ty, tu_ngay, den_ngay);
+                //string apiGetData = "api/GetDataDiemDanh?function=aperson&id=0601435066976126&company=Conek&fromday=2020-09-01&today=2020-09-15";
+                string myJson = Api.getDataObject("http://cloudapi.conek.vn", data);
+                if (myJson != null)
                 {
-                    dsChamCong = nguoichamcong;
+                    dsChamCong nguoichamcong = JsonConvert.DeserializeObject<dsChamCong>(myJson);
+                    if (nguoichamcong.table != null && nguoichamcong.table.Count() > 0)
+                    {
+                        dsChamCong = nguoichamcong;
+                    }
                 }
             }
+            
         }
     }
 }

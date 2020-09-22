@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BO\Api.cs" />
     <Compile Include="BO\CongTyBO.cs" />
+    <Compile Include="BO\ZaloUser.cs" />
     <Compile Include="ChamCong\ChamCong.cs" />
     <Compile Include="ChamCong\ChamCongNews.cs" />
     <Compile Include="ChamCong\PhongBan.cs" />

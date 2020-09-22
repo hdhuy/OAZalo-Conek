@@ -1425,7 +1425,7 @@ namespace OAZalo.XuLy
             }
             finally
             {
-                File.Delete(pathNew);
+                //File.Delete(pathNew);
             }
         }
         public void ExportExcelDynamicTest(string serverPath, string path, string newName, string nameFileOutput, int indexSheet, List<ExcelHeaderEntity> listCell

@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OAZaloDataAccess.BO;
+using OAZaloDataAccess.ChamCong;
+using OAZaloDataAccess.NhanVien;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,6 +66,12 @@ namespace OAZalo
                     oaID = data["recipient"]["id"].ToString();
                 if (!string.IsNullOrEmpty(strMessage) && !string.IsNullOrEmpty(fromuid))
                 {
+                    ZaloUser.strAppID = strAppID;
+                    ZaloUser.fromuid = fromuid;
+                    ZaloUser.strEvent = strEvent;
+                    ZaloUser.strMessage = strMessage;
+                    ZaloUser.strMessageIds = strMessageIds;
+                    ZaloUser.oaID = oaID;
                     #region Thao tác menu
                     if (strEvent == "user_send_text"
                         || strEvent == "user_seen_message"
@@ -70,39 +79,73 @@ namespace OAZalo
                     {
                         try
                         {
-                            #region Danh sách chấm công
-                            if (strMessage == "#dschamcong")
+                            #region Thông tin người click zalo
+                            if (strMessage == "#ttzalo")
                             {
                                 JObject jObject = new
-                                    JObject(
-                                        new JProperty("recipient",
-                                            new JObject(new JProperty("user_id", fromuid))
-                                        ),
-                                        new JProperty("message",
-                                            new JObject(
-                                                new JProperty("text", "Xem danh sach"),
-                                                new JProperty("attachment",
-                                                    new JObject(
-                                                        new JProperty("type", "template"),
-                                                        new JProperty("payload", new JObject(
-                                                            new JProperty("buttons",
-                                                                new JArray(
-                                                                    new JObject(
-                                                                        new JProperty("title", "Danh sách chấm công"),
-                                                                        new JProperty("payload", new JObject(new JProperty("url", "https://zalo.onesms.vn/Conek/DSChamCong.aspx"))),
-                                                                        new JProperty("type", "oa.open.url")
-                                                                        )
-                                                                ))
-                                                            ))
-                                                    )
-                                                )
-                                            )
-                                    ));
-                                getData1(jObject);
+                                  JObject(
+                                      new JProperty("recipient",
+                                          new JObject(new JProperty("user_id", fromuid))
+                                      ),
+                                      new JProperty("message",
+                                          new JObject(
+                                              new JProperty("text", "Xem thông tin zalo"),
+                                              new JProperty("attachment",
+                                                  new JObject(
+                                                      new JProperty("type", "template"),
+                                                      new JProperty("payload", new JObject(
+                                                          new JProperty("buttons",
+                                                              new JArray(
+                                                                  new JObject(
+                                                                      new JProperty("title", "Thông tin zalo của bạn"),
+                                                                      new JProperty("payload", new JObject(new JProperty("url", "https://zalo.onesms.vn/Conek/ThongTinZalo.aspx"))),
+                                                                      new JProperty("type", "oa.open.url")
+                                                                      )
+                                                              ))
+                                                          ))
+                                                  )
+                                              )
+                                          )
+                                  ));
 
+                                getData1(jObject);
                             }
                             #endregion
                             #region Danh sách chấm công
+                            if (strMessage == "#dschamcong")
+                            {
+                                string url = checkId(fromuid);
+                                JObject jObject = new
+                                  JObject(
+                                      new JProperty("recipient",
+                                          new JObject(new JProperty("user_id", fromuid))
+                                      ),
+                                      new JProperty("message",
+                                          new JObject(
+                                              new JProperty("text", "Xem danh sách chấm công"),
+                                              new JProperty("attachment",
+                                                  new JObject(
+                                                      new JProperty("type", "template"),
+                                                      new JProperty("payload", new JObject(
+                                                          new JProperty("buttons",
+                                                              new JArray(
+                                                                  new JObject(
+                                                                      new JProperty("title", "Danh sách chấm công"),
+                                                                      new JProperty("payload", new JObject(new JProperty("url",url))),
+                                                                      new JProperty("type", "oa.open.url")
+                                                                      )
+                                                              ))
+                                                          ))
+                                                  )
+                                              )
+                                          )
+                                  ));
+
+                                getData1(jObject);
+                            }
+                            #endregion
+                            
+                            #region Thống kê gate 3
                             if (strMessage == "#tkg3")
                             {
                                 JObject jObject = new
@@ -112,7 +155,7 @@ namespace OAZalo
                                         ),
                                         new JProperty("message",
                                             new JObject(
-                                                new JProperty("text", "Thống kê sản lượng gate 3"),
+                                                new JProperty("text", "Xem thống kê sản lượng gate 3"),
                                                 new JProperty("attachment",
                                                     new JObject(
                                                         new JProperty("type", "template"),
@@ -134,38 +177,8 @@ namespace OAZalo
 
                             }
                             #endregion
-                            #region Tra cứu chấm công
-                            if (strMessage == "#tccong")
-                            {
-                                JObject jObject = new
-                                    JObject(
-                                        new JProperty("recipient",
-                                            new JObject(new JProperty("user_id", fromuid))
-                                        ),
-                                        new JProperty("message",
-                                            new JObject(
-                                                new JProperty("text", "Tra cứu chấm công"),
-                                                new JProperty("attachment",
-                                                    new JObject(
-                                                        new JProperty("type", "template"),
-                                                        new JProperty("payload", new JObject(
-                                                            new JProperty("buttons",
-                                                                new JArray(
-                                                                    new JObject(
-                                                                        new JProperty("title", "Tra cứu chấm công"),
-                                                                        new JProperty("payload", new JObject(new JProperty("url", "https://zalo.onesms.vn/Conek/TCChamCong.aspx"))),
-                                                                        new JProperty("type", "oa.open.url")
-                                                                        )
-                                                                ))
-                                                            ))
-                                                    )
-                                                )
-                                            )
-                                    ));
-                                getData1(jObject);
-
-                            }
-                            #endregion
+                          
+                           
 
                         }
                         catch (Exception ex)
@@ -265,6 +278,31 @@ namespace OAZalo
             reader.Close();
             dataStream.Close();
             res.Close();
+        }
+        protected string checkId(string id)
+        {
+            string re = "https://zalo.onesms.vn/Conek/DSChamCong.aspx";
+            string myJson = Api.getDataObject("http://cloudapi.conek.vn", "api/GetDataDiemDanh?function=all&company=Conek&fromday=2020-09-01&today=2020-09-15");
+            if (myJson != null)
+            {
+                dsChamCong ketqua = JsonConvert.DeserializeObject<dsChamCong>(myJson);
+                if (ketqua.table != null && ketqua.table.Count() > 0)
+                {
+                    foreach (ChamCong a in ketqua.table)
+                    {
+                        if (a.staffid.Equals(id))
+                        {
+                            string chucvu = a.department;
+                            if (!chucvu.Contains("GIAM DOC"))
+                            {
+                                re= "https://zalo.onesms.vn/Conek/TCChamCong.aspx";
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return re;
         }
         public static void ghilog(string nameFile, string msg)
         {

@@ -78,13 +78,13 @@ namespace OAZalo.Conek
         protected global::System.Web.UI.WebControls.Button btExport;
 
         /// <summary>
-        /// testnv control.
+        /// rcbTennv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox testnv;
+        protected global::Telerik.Web.UI.RadComboBox rcbTennv;
 
         /// <summary>
         /// btnTimtheonhanvien control.
