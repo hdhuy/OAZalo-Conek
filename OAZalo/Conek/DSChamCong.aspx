@@ -68,7 +68,7 @@
             <p><%=message %></p>
             <div class="row">
                 <div class="col-sm-12">
-                    <%if (dsHienthi != null && dsHienthi.Count > 0)
+                    <%if (listStaffReport!=null)
                         { %>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tblChamCong">
@@ -76,26 +76,26 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Họ tên</th>
-                                    <th>Mã</th>
                                     <th>Bộ phận</th>
                                     <th>Thời gian vào</th>
                                     <th>Thời gian ra</th>
                                     <th>Muộn (phút)</th>
+                                    <th>Ghi chú</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% int dem = 0;
-                                    foreach (var nhanvien in dsHienthi)
+                                    foreach (var nhanvien in listStaffReport)
                                     {
                                         dem = dem + 1; %>
                                 <tr>
                                     <td><%=dem %></td>
-                                    <td><%=nhanvien.ten %></td>
-                                    <td><%=nhanvien.ma %></td>
-                                    <td><%=nhanvien.phongban %></td>
-                                    <td><%=nhanvien.ngaygiovao %></td>
-                                    <td><%=nhanvien.ngaygiora %></td>
-                                    <td><%=nhanvien.muon %></td>
+                                    <td><%=nhanvien.staffName %></td>
+                                    <td><%=nhanvien.deparment %></td>
+                                    <td><%=nhanvien.dayTouch+" "+nhanvien.timeStart %></td>
+                                    <td><%=nhanvien.dayTouch+" "+nhanvien.timeStart %></td>
+                                    <td><%=nhanvien.time %></td>
+                                    <td><%=nhanvien.note %></td>
                                 </tr>
                                 <%} %>
                             </tbody>
