@@ -266,19 +266,19 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Conek\ChonCongTy.aspx.cs">
+      <DependentUpon>ChonCongTy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Conek\ChonCongTy.aspx.designer.cs">
+      <DependentUpon>ChonCongTy.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Conek\DangKi.aspx.cs">
       <DependentUpon>DangKi.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Conek\DangKi.aspx.designer.cs">
       <DependentUpon>DangKi.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Conek\DangKiZalo.aspx.cs">
-      <DependentUpon>DangKiZalo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Conek\DangKiZalo.aspx.designer.cs">
-      <DependentUpon>DangKiZalo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Conek\DSChamCong.aspx.cs">
       <DependentUpon>DSChamCong.aspx</DependentUpon>
@@ -294,12 +294,26 @@
     <Compile Include="Conek\DSNhanVien.aspx.designer.cs">
       <DependentUpon>DSNhanVien.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Conek\Error404.aspx.cs">
+      <DependentUpon>Error404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Conek\Error404.aspx.designer.cs">
+      <DependentUpon>Error404.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Conek\TCChamCong.aspx.cs">
       <DependentUpon>TCChamCong.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Conek\TCChamCong.aspx.designer.cs">
       <DependentUpon>TCChamCong.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Conek\ThongTinZalo.aspx.cs">
+      <DependentUpon>ThongTinZalo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Conek\ThongTinZalo.aspx.designer.cs">
+      <DependentUpon>ThongTinZalo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Conek\TKGate3.aspx.cs">
       <DependentUpon>TKGate3.aspx</DependentUpon>
@@ -1552,11 +1566,13 @@
     <Content Include="Assets\templates\plugins\wow\css\site.css" />
     <Content Include="Assets\templates\plugins\wow\dist\wow.js" />
     <Content Include="Assets\templates\plugins\wow\dist\wow.min.js" />
+    <Content Include="Conek\ChonCongTy.aspx" />
     <Content Include="Conek\DangKi.aspx" />
-    <Content Include="Conek\DangKiZalo.aspx" />
     <Content Include="Conek\DSChamCong.aspx" />
     <Content Include="Conek\DSNhanVien.aspx" />
+    <Content Include="Conek\Error404.aspx" />
     <Content Include="Conek\TCChamCong.aspx" />
+    <Content Include="Conek\ThongTinZalo.aspx" />
     <Content Include="Conek\TKGate3.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

@@ -18,7 +18,7 @@ namespace CMS.Conek
         public List<hienThiNhanVien> ttns = new List<hienThiNhanVien>();
         protected void Page_Load(object sender, EventArgs e)
         {
-                string myJson = Api.getDataObject("http://cloudapi.conek.vn", "api/GetData?function=all&dataSearch=Conek&status=ON");
+                string myJson = Api.getDataObject("http://cloudapi.conek.vn", "api/GetData?function=all&data1=Conek&data2=ON");
                 if (myJson != null)
                 {
                 dsNhanVien ketqua = JsonConvert.DeserializeObject<dsNhanVien>(myJson);

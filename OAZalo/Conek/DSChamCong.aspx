@@ -57,57 +57,56 @@
                     <asp:Button ID="btTimKiem" runat="server" Text="Tìm kiếm" CssClass="btn btn-danger" OnClick="btTimKiem_Click" />
                     <asp:Button ID="btExport" runat="server" CssClass="btn btn-primary" OnClick="btExport_Click" Text="Xuất excel" />
                 </div>
-                 <div class="col-sm-3">
-                    <telerik:RadComboBox ID="testnv" runat="server" Width="100%" EmptyMessage="Chọn nhân viên" AllowCustomText="true" Filter="Contains">
+
+                <div class="col-sm-3">
+                    <telerik:RadComboBox ID="rcbTennv" runat="server" Width="100%" EmptyMessage="Chọn " OnSelectedIndexChanged="rcbTennv_SelectedIndexChanged" AllowCustomText="true" Filter="Contains">
                         
                     </telerik:RadComboBox>
                 </div>
-                 
-                <div class="col-sm-3">
-                    <asp:Button ID="btnTimtheonhanvien" runat="server" Text="Tìm theo người này" CssClass="btn btn-danger" OnClick="btTimKiemtheonhanvien_Click" />
-                </div>
+                <asp:Button ID="btnTimtheonhanvien" runat="server" Text="Tìm theo người này" CssClass="btn btn-danger" OnClick="btTimKiemtheonhanvien_Click" Width="170px" />
             </div>
             <p><%=message %></p>
             <div class="row">
                 <div class="col-sm-12">
-
-                    <%if (dsHienthi != null && dsHienthi.Count > 0)
-                                    { %>
+                    <%if (listStaffReport!=null)
+                        { %>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tblChamCong">
                             <thead>
                                 <tr>
                                     <th>STT</th>
                                     <th>Họ tên</th>
-                                    <th>Mã</th>
                                     <th>Bộ phận</th>
+                                    <th>Ngày</th>
                                     <th>Thời gian vào</th>
                                     <th>Thời gian ra</th>
                                     <th>Muộn (phút)</th>
+                                    <th>Ghi chú</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% int dem = 0;
-                                    foreach (var nhanvien in dsHienthi)
+                                    foreach (var nhanvien in listStaffReport)
                                     {
                                         dem = dem + 1; %>
-                                            <tr>
-                                                <td><%=dem %></td>
-                                                <td><%=nhanvien.ten %></td>
-                                                <td><%=nhanvien.ma %></td>
-                                                <td><%=nhanvien.phongban %></td>
-                                                <td><%=nhanvien.ngaygiovao %></td
-                                                <td><%=nhanvien.ngaygiora %></td>
-                                                <td><%=nhanvien.muon %></td>
-                                            </tr>
+                                <tr>
+                                    <td><%=dem %></td>
+                                    <td><%=nhanvien.staffName %></td>
+                                    <td><%=nhanvien.deparment %></td>
+                                    <td><%=nhanvien.dayTouch %></td>
+                                    <td><%=nhanvien.timeStart %></td>
+                                    <td><%=nhanvien.timeOut %></td>
+                                    <td><%=nhanvien.time %></td>
+                                    <td><%=nhanvien.note %></td>
+                                </tr>
                                 <%} %>
                             </tbody>
 
                         </table>
                     </div>
                     <%}
-                    else
-                    {%>
+                        else
+                        {%>
                     <h6>Dữ liệu đang được cập nhật . . .</h6>
                     <%} %>
                 </div>

@@ -11,6 +11,8 @@ using System.Net.Http.Headers;
 using Telerik.Web.UI;
 using OAZaloDataAccess.BO;
 using System.Collections;
+using OAZaloDataAccess.NhanVien;
+using Newtonsoft.Json.Linq;
 
 namespace OAZalo.Conek
 {
@@ -21,10 +23,12 @@ namespace OAZalo.Conek
         string cong_ty = "";
         public LocalAPI localAPI = new LocalAPI();
         public List<hienThiChamCong> dsHienthi = new List<hienThiChamCong>();
-        public List<ChamCong> news = new List<ChamCong>();
+        public List<StaffReport> listStaffReport = new List<StaffReport>();
+        //public List<ChamCong> news = new List<ChamCong>();
         public string message = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 rdTuNgay.SelectedDate = DateTime.Now;
@@ -33,18 +37,9 @@ namespace OAZalo.Conek
                 tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
                 den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
                 cong_ty = "Conek";
-                if (dsHienthi.Count > 0)
-                {
-                    ArrayList itemList = new ArrayList();
-                    foreach (hienThiChamCong chamcong in dsHienthi)
-                    {
-                        itemList.Add(chamcong.ten);
-                    }
-                    testnv.DataSource = itemList;
-                    testnv.DataBind();
-                }
                 BindData(null);
             }
+
         }
         protected void rdTuNgay_SelectedDateChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs e)
         {
@@ -73,22 +68,27 @@ namespace OAZalo.Conek
             tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
             den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
             cong_ty = rcbCongty.SelectedValue;
-            int index = testnv.SelectedIndex;
-            if (dsHienthi.Count > 0)
-            {
-                string ma_nhan_vien = dsHienthi[index].ma;
-                BindData(ma_nhan_vien);
-            }
-            else
-            {
-                message += "dsHienthi đã bị reset, đã chọn: ";
-            }
+            string ma_nhan_vien = rcbTennv.SelectedValue;
+            BindData(ma_nhan_vien);
+        }
+        protected void rcbTennv_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
         protected void rcbNhanvien_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-        private void BindData(string nvid)
+        private void BindData(string ma)
+        {
+            string data = string.Format("/api/GetDataDiemDanh?function=all&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay);
+            List<StaffReport> lsr = getListStaffReport(data);
+            if (lsr != null)
+            {
+                listStaffReport = lsr;
+            }
+        }
+        private void BindData1(string nvid)
         {
             string apiGetData = "";
             if (nvid == null)
@@ -97,57 +97,200 @@ namespace OAZalo.Conek
             }
             else
             {
-                apiGetData = string.Format("/api/GetDataDiemDanh?function=aperson&id={3}&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay,nvid);
+                apiGetData = string.Format("/api/GetDataDiemDanh?function=aperson&id={3}&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay, nvid);
             }
             string myJson = Api.getDataObject("http://cloudapi.conek.vn", apiGetData);
             if (myJson != null)
             {
                 dsChamCong chamcongs = JsonConvert.DeserializeObject<dsChamCong>(myJson);
-                if (chamcongs != null && chamcongs.table.Count() > 0)
+                if (chamcongs != null)
                 {
                     string ma = "";
                     string ngay = "";
-                    foreach (ChamCong chamcong in chamcongs.table)
-                    {
-                        if (!chamcong.staffid.Equals(ma) && !chamcong.daytouch.Equals(ngay))
-                        {
-                            
-                        }
-                        hienThiChamCong hienthi = new hienThiChamCong();
-                        hienthi.ma = chamcong.staffid;
-                        hienthi.ten = chamcong.staffname;
-                        hienthi.congty = chamcong.companyname;
-                        //hienthi.phongban = chamcong.department;
-                        //List<ChamCong> dstrungngay = new List<ChamCong>();
-                        //foreach (ChamCong timkiem in chamcongs.table)
-                        //{
-                        //    if (timkiem.staffid.Equals(chamcong.staffid) &&
-                        //        timkiem.daytouch.Equals(chamcong.daytouch))
-                        //    {
-                        //        dstrungngay.Add(timkiem);
-                        //    }
-                        //}
-                        //hienthi.phongban = "Trùng: " + dstrungngay.Count;
-                        //if (dstrungngay.Count > 0)
-                        //{
-                        //    hienthi.ngaygiovao = chamcong.daytouch + " " + dstrungngay[0].timehours;
-                        //    hienthi.ngaygiora = chamcong.daytouch + " " + dstrungngay[dstrungngay.Count - 1].timehours;
-                        //}
-                        //else
-                        //{
-                        //    hienthi.ngaygiovao = chamcong.daytouch + " " + chamcong.timehours;
-                        //    //hienthi.ngaygiora = chamcong.daytouch + " " + dstrungngay[dstrungngay.Count - 1].timehours;
-                        //}
-                        hienthi.ngaygiovao = chamcong.daytouch + " " + chamcong.timehours;
-                        hienthi.ngaygiora = chamcong.daytouch + " " + chamcong.timehours;
-                        hienthi.muon = chamcong.timelate;
-                        dsHienthi.Add(hienthi);
-                        ma = chamcong.staffid;
-                        ngay = chamcong.daytouch;
-                    }
+                    ArrayList datasource = new ArrayList();
+                    if (chamcongs.table != null)
+                        if (chamcongs.table.Count() > 0)
+
+                            foreach (ChamCong chamcong in chamcongs.table)
+                            {
+                                if (!chamcong.staffid.Equals(ma) && !chamcong.daytouch.Equals(ngay))
+                                {
+
+                                }
+                                hienThiChamCong hienthi = new hienThiChamCong();
+                                hienthi.ma = chamcong.staffid;
+                                hienthi.ten = chamcong.staffname;
+                                hienthi.congty = chamcong.companyname;
+                                //hienthi.phongban = chamcong.department;
+                                //List<ChamCong> dstrungngay = new List<ChamCong>();
+                                //foreach (ChamCong timkiem in chamcongs.table)
+                                //{
+                                //    if (timkiem.staffid.Equals(chamcong.staffid) &&
+                                //        timkiem.daytouch.Equals(chamcong.daytouch))
+                                //    {
+                                //        dstrungngay.Add(timkiem);
+                                //    }
+                                //}
+                                //hienthi.phongban = "Trùng: " + dstrungngay.Count;
+                                //if (dstrungngay.Count > 0)
+                                //{
+                                //    hienthi.ngaygiovao = chamcong.daytouch + " " + dstrungngay[0].timehours;
+                                //    hienthi.ngaygiora = chamcong.daytouch + " " + dstrungngay[dstrungngay.Count - 1].timehours;
+                                //}
+                                //else
+                                //{
+                                //    hienthi.ngaygiovao = chamcong.daytouch + " " + chamcong.timehours;
+                                //    //hienthi.ngaygiora = chamcong.daytouch + " " + dstrungngay[dstrungngay.Count - 1].timehours;
+                                //}
+                                hienthi.ngaygiovao = chamcong.daytouch + " " + chamcong.timehours;
+                                hienthi.ngaygiora = chamcong.daytouch + " " + chamcong.timehours;
+                                hienthi.muon = chamcong.timelate;
+                                dsHienthi.Add(hienthi);
+                                datasource.Add(hienthi.ma);
+                                ma = chamcong.staffid;
+                                ngay = chamcong.daytouch;
+                            }
+
+                    rcbTennv.DataSource = datasource;
+                    rcbTennv.DataBind();
                 }
             }
-            
+
+        }
+        List<StaffReport> getListStaffReport(string data)
+        {
+            List<StaffReport> re = new List<StaffReport>();
+            try
+            {
+                string content = Api.getDataObject("http://cloudapi.conek.vn", data);
+                List <Staff> staffList = new List<Staff>();
+                JObject jObject = JObject.Parse(content);
+                JArray jArray = JArray.Parse(jObject["table"].ToString());
+
+                for (int i = 0; i < jArray.Count; i++)
+                {
+                    Staff staff = new Staff();
+                    JObject jObject1 = JObject.Parse(jArray[i].ToString());
+                    foreach (KeyValuePair<string, JToken> property in jObject1)
+                    {
+                        if (property.Key.ToString().Trim().Equals("staffid"))
+                        {
+                            staff.staffID = property.Value.ToString().Trim();
+                        }
+                        else if (property.Key.ToString().Trim().Equals("staffname"))
+                        {
+                            staff.staffName = property.Value.ToString();
+                        }
+                        else if (property.Key.ToString().Trim().Equals("companyname"))
+                        {
+                            staff.companyName = property.Value.ToString();
+                        }
+                        else if (property.Key.ToString().Trim().Equals("department"))
+                        {
+                            staff.deparment = property.Value.ToString();
+                        }
+                        else if (property.Key.ToString().Trim().Equals("daytouch"))
+                        {
+                            staff.dayTouch = property.Value.ToString();
+                        }
+                        else if (property.Key.ToString().Trim().Equals("timehours"))
+                        {
+                            staff.timeHours = property.Value.ToString();
+                        }
+                        else if (property.Key.ToString().Trim().Equals("timelate"))
+                        {
+                            staff.timeLate = property.Value.ToString();
+                        }
+                    }
+                    staffList.Add(staff);
+                }
+
+                List<StaffReport> stafReportList = new List<StaffReport>();
+                StaffReport staffReport = null;
+                for (int i = 0; i < staffList.Count; i++)
+                {
+                    //Add the last element
+                    if (i == (staffList.Count - 1))
+                    {
+                        staffReport = new StaffReport();
+                        staffReport.staffID = staffList[i].staffID;
+                        staffReport.staffName = staffList[i].staffName;
+                        staffReport.companyName = staffList[i].companyName;
+                        staffReport.deparment = staffList[i].deparment;
+                        staffReport.dayTouch = staffList[i].dayTouch;
+                        staffReport.timeStart = staffList[i].timeHours;
+                        staffReport.time = staffList[i].timeLate;
+                        stafReportList.Add(staffReport);
+                    }
+                    //Add dulicate element
+                    else if (staffList[i].staffID == staffList[i + 1].staffID && staffList[i].dayTouch == staffList[i + 1].dayTouch)
+                    {
+                        staffReport = new StaffReport();
+                        staffReport.staffID = staffList[i].staffID;
+                        staffReport.staffName = staffList[i].staffName;
+                        staffReport.companyName = staffList[i].companyName;
+                        staffReport.deparment = staffList[i].deparment;
+                        staffReport.dayTouch = staffList[i].dayTouch;
+                        staffReport.timeStart = staffList[i + 1].timeHours;
+                        staffReport.timeOut = staffList[i].timeHours;
+                        staffReport.time = staffList[i + 1].timeLate;
+                        stafReportList.Add(staffReport);
+                    }
+                    //Add unduplicate element
+                    else
+                    {
+                        staffReport = new StaffReport();
+                        staffReport.staffID = staffList[i].staffID;
+                        staffReport.staffName = staffList[i].staffName;
+                        staffReport.companyName = staffList[i].companyName;
+                        staffReport.deparment = staffList[i].deparment;
+                        staffReport.dayTouch = staffList[i].dayTouch;
+                        staffReport.timeStart = staffList[i].timeHours;
+                        staffReport.time = staffList[i].timeLate;
+                        stafReportList.Add(staffReport);
+                    }
+                }
+
+                List<StaffReport> staffReports = new List<StaffReport>(); //Trum cuoi 
+                for (int i = 0; i < stafReportList.Count; i++)
+                {
+                    //Add last element 
+                    if (i == stafReportList.Count - 1)
+                    {
+                        staffReports.Add(stafReportList[i]);
+                    }
+                    //Remove dulicate element 
+                    else if (stafReportList[i].staffID == stafReportList[i + 1].staffID && stafReportList[i].dayTouch == stafReportList[i + 1].dayTouch)
+                    {
+                        StaffReport sf = new StaffReport();
+                        stafReportList[i + 1].timeOut = stafReportList[i].timeOut;
+                    }
+                    else staffReports.Add(stafReportList[i]);
+                }
+                //Check note
+                for (int i = 0; i < staffReports.Count; i++)
+                {
+                    if (staffReports[i].timeOut == null)
+                    {
+                        staffReports[i].note = "No checkout ";
+                        if (Int32.Parse(staffReports[i].time) > 0) staffReports[i].note = "Late and No checkout";
+                    }
+                    else if (Int32.Parse(staffReports[i].time) <= 0)
+                    {
+                        staffReports[i].time = "0";
+                    }
+                    else if (Int32.Parse(staffReports[i].time) > 0)
+                    {
+                        staffReports[i].note = "Late";
+                    }
+                }
+                re = staffReports;
+            }
+            catch (Exception)
+            {
+                re = null;
+            }
+            return re;
         }
         protected void btExport_Click(object sender, EventArgs e)
         {
@@ -194,15 +337,15 @@ namespace OAZalo.Conek
             lstHeader.Add(new ExcelHeaderEntity { name = "Muộn (số phút)", colM = 1, rowM = 1, width = 20 });
             lstColumn.Add(new ExcelEntity { Name = "Muon", Align = XLAlignmentHorizontalValues.Left, Color = XLColor.Black, Type = "String" });
 
-            for (int i = 0; i < news.Count; i++)
+            for (int i = 0; i < dsHienthi.Count; i++)
             {
                 DataRow row = dt.NewRow();
-                row["Ma_Nhan_Vien"] = news[i].staffid;
-                row["Ho_Ten"] = news[i].staffname;
-                row["Bo_Phan"] = news[i].department;
-                row["Thoi_Gian_Vao"] = news[i].timehours;
-                row["Thoi_Gian_Ra"] = news[i].timehours;
-                row["Muon"] = news[i].timelate;
+                row["Ma_Nhan_Vien"] = dsHienthi[i].ma;
+                row["Ho_Ten"] = dsHienthi[i].ten;
+                row["Bo_Phan"] = dsHienthi[i].phongban;
+                row["Thoi_Gian_Vao"] = dsHienthi[i].ngaygiovao;
+                row["Thoi_Gian_Ra"] = dsHienthi[i].ngaygiora;
+                row["Muon"] = dsHienthi[i].muon;
                 dt.Rows.Add(row);
             }
             int rowHeaderStart = 6;
@@ -219,5 +362,6 @@ namespace OAZalo.Conek
             string nameFileOutput = newName;
             localAPI.ExportExcelDynamic(serverPath, path, newName, nameFileOutput, 1, listCell, rowHeaderStart, rowStart, colStart, colEnd, dt, lstHeader, lstColumn, true);
         }
+
     }
 }

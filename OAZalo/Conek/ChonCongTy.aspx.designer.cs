@@ -11,7 +11,7 @@ namespace OAZalo.Conek
 {
 
 
-    public partial class DangKi
+    public partial class ChonCongTy
     {
 
         /// <summary>
@@ -33,39 +33,21 @@ namespace OAZalo.Conek
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// txtSdt control.
+        /// rcbCongty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSdt;
+        protected global::Telerik.Web.UI.RadComboBox rcbCongty;
 
         /// <summary>
-        /// cboCongty control.
+        /// btTimKiem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect cboCongty;
-
-        /// <summary>
-        /// cboDichvu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect cboDichvu;
-
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btTimKiem;
     }
 }
