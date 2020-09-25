@@ -18,12 +18,12 @@ namespace OAZalo.Conek
         public string oaID;
         protected void Page_Load(object sender, EventArgs e)
         {
-             strAppID=UserDetail.strAppID;
-             fromuid=UserDetail.fromuid;
-             strEvent=UserDetail.strEvent;
-             strMessage= UserDetail.strMessage;
-             strMessageIds= UserDetail.strMessageIds;
-             oaID= UserDetail.oaID;
+             //strAppID=UserDetail.strAppID;
+             //fromuid=UserDetail.fromuid;
+             //strEvent=UserDetail.strEvent;
+             //strMessage= UserDetail.strMessage;
+             //strMessageIds= UserDetail.strMessageIds;
+             //oaID= UserDetail.oaID;
         }
 }
 }

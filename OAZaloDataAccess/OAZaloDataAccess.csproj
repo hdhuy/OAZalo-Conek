@@ -46,11 +46,13 @@
   <ItemGroup>
     <Compile Include="BO\Api.cs" />
     <Compile Include="BO\UserDetail.cs" />
+    <Compile Include="BO\ZaloSender.cs" />
     <Compile Include="ChamCong\ChamCong.cs" />
     <Compile Include="ChamCong\ChamCongNews.cs" />
     <Compile Include="ChamCong\PhongBan.cs" />
     <Compile Include="NhanVien\EntityNFCId.cs" />
     <Compile Include="NhanVien\EntityPhoneNumber.cs" />
+    <Compile Include="NhanVien\KiemTraNhanVien.cs" />
     <Compile Include="NhanVien\NhanVien.cs" />
     <Compile Include="NhanVien\Staff.cs" />
     <Compile Include="NhanVien\ThongTinCongTy.cs" />

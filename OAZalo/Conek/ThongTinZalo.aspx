@@ -9,10 +9,6 @@
 <body>
    <p>strAppID: <%=strAppID%></p>
     <p>fromuid: <% =fromuid%></p>
-    <p>strEvent: <% =strEvent%></p>
-    <p>strMessage: <% =strMessage%></p>
-    <p>strMessageIds: <% =strMessageIds%></p>
-    <p>oaID: <% =oaID%></p>
     <form id="form1" runat="server">
         <div>
         </div>

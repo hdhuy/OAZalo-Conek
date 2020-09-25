@@ -77,6 +77,7 @@
                                     <th>STT</th>
                                     <th>Họ tên</th>
                                     <th>Bộ phận</th>
+                                    <th>Ngày</th>
                                     <th>Thời gian vào</th>
                                     <th>Thời gian ra</th>
                                     <th>Muộn (phút)</th>
@@ -92,8 +93,9 @@
                                     <td><%=dem %></td>
                                     <td><%=nhanvien.staffName %></td>
                                     <td><%=nhanvien.deparment %></td>
-                                    <td><%=nhanvien.dayTouch+" "+nhanvien.timeStart %></td>
-                                    <td><%=nhanvien.dayTouch+" "+nhanvien.timeStart %></td>
+                                    <td><%=nhanvien.dayTouch %></td>
+                                    <td><%=nhanvien.timeStart %></td>
+                                    <td><%=nhanvien.timeOut %></td>
                                     <td><%=nhanvien.time %></td>
                                     <td><%=nhanvien.note %></td>
                                 </tr>

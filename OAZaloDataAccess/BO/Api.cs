@@ -41,7 +41,7 @@ namespace OAZaloDataAccess.BO
         {
             JObject jObject = JObject.Parse(content);
             JArray jArray = JArray.Parse(jObject["table"].ToString());
-            List<ThongTinCongTy> thongTinCongTy_Details = new List<ThongTinCongTy>();
+            List<ThongTinCongTy> thongTinCongTy = new List<ThongTinCongTy>();
             for (int i = 0; i < jArray.Count; i++)
             {
                 JObject jObject1 = JObject.Parse(jArray[i].ToString());
@@ -82,12 +82,28 @@ namespace OAZaloDataAccess.BO
                             {
                                 thongTinCongTy_Detail.Office = property2.Value.ToString();
                             }
+                            else if (property2.Key.Equals("Vehicle"))
+                            {
+                                thongTinCongTy_Detail.Vehicle = property2.Value.ToString();
+                            }
+                            else if (property2.Key.Equals("LicensePlate"))
+                            {
+                                thongTinCongTy_Detail.LicensePlate = property2.Value.ToString();
+                            }
+                            else if (property2.Key.Equals("ParkingTicket"))
+                            {
+                                thongTinCongTy_Detail.ParkingTicket = property2.Value.ToString();
+                            }
+                            else if (property2.Key.Equals("TicketActive"))
+                            {
+                                thongTinCongTy_Detail.TicketActive = property2.Value.ToString();
+                            }
                         }
-                        thongTinCongTy_Details.Add(thongTinCongTy_Detail);
+                        thongTinCongTy.Add(thongTinCongTy_Detail);
                     }
                 }
             }
-            return thongTinCongTy_Details;
+            return thongTinCongTy;
         }
     }
 }

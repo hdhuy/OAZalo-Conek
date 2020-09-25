@@ -18,6 +18,7 @@ namespace OAZalo
 {
     public partial class ZaloCallBack : System.Web.UI.Page
     {
+        public UserDetail user;
         protected void Page_Load(object sender, EventArgs e)
         {
             string strAppID = string.Empty;
@@ -26,7 +27,6 @@ namespace OAZalo
             string strMessage = string.Empty;
             string strMessageIds = string.Empty;
             string oaID = string.Empty;
-
             try
             {
                 if (Request.Url != null)
@@ -66,12 +66,6 @@ namespace OAZalo
                     oaID = data["recipient"]["id"].ToString();
                 if (!string.IsNullOrEmpty(strMessage) && !string.IsNullOrEmpty(fromuid))
                 {
-                    UserDetail.strAppID = strAppID;
-                    UserDetail.fromuid = fromuid;
-                    UserDetail.strEvent = strEvent;
-                    UserDetail.strMessage = strMessage;
-                    UserDetail.strMessageIds = strMessageIds;
-                    UserDetail.oaID = oaID;
                     #region Thao tác menu
                     if (strEvent == "user_send_text"
                         || strEvent == "user_seen_message"
@@ -79,6 +73,7 @@ namespace OAZalo
                     {
                         try
                         {
+                            user.fromuid = fromuid;
                             //Thông tin người click zalo
                             if (strMessage == "#ttzalo")
                             {
@@ -87,46 +82,14 @@ namespace OAZalo
                             //Danh sách chấm công
                             if (strMessage == "#dschamcong")
                             {
-                                string url = checkId(fromuid);
-                                traVeNutZalo("Xem danh sách chấm công","Danh sách chấm công", url, fromuid);
+                                string url = checkId();
+                                traVeNutZalo("Xem danh sách chấm công","Danh sách chấm công",url, fromuid);
                             }
-
-                            #region Thống kê gate 3
+                            //Thống kê gate 3
                             if (strMessage == "#tkg3")
                             {
                                 traVeNutZalo("Xem thống kê sản lượng gate 3", "Thống kê sản lượng gate 3", "https://zalo.onesms.vn/Conek/TKGate3.aspx", fromuid);
-                                //JObject jObject = new
-                                //    JObject(
-                                //        new JProperty("recipient",
-                                //            new JObject(new JProperty("user_id", fromuid))
-                                //        ),
-                                //        new JProperty("message",
-                                //            new JObject(
-                                //                new JProperty("text", "Xem thống kê sản lượng gate 3"),
-                                //                new JProperty("attachment",
-                                //                    new JObject(
-                                //                        new JProperty("type", "template"),
-                                //                        new JProperty("payload", new JObject(
-                                //                            new JProperty("buttons",
-                                //                                new JArray(
-                                //                                    new JObject(
-                                //                                        new JProperty("title", "Thống kê sản lượng gate 3"),
-                                //                                        new JProperty("payload", new JObject(new JProperty("url", "https://zalo.onesms.vn/Conek/TKGate3.aspx"))),
-                                //                                        new JProperty("type", "oa.open.url")
-                                //                                        )
-                                //                                ))
-                                //                            ))
-                                //                    )
-                                //                )
-                                //            )
-                                //    ));
-                                //getData1(jObject);
-
                             }
-                            #endregion
-
-
-
                         }
                         catch (Exception ex)
                         {
@@ -262,35 +225,32 @@ namespace OAZalo
             dataStream.Close();
             res.Close();
         }
-        protected string checkId(string id)
+        protected string checkId()
         {
-            string re = "https://zalo.onesms.vn/Conek/DSChamCong.aspx";
-            string data = string.Format("api/GetData?function={0}&data1={1}&data2={2}", "zalo", id, "DiemDanh");
+            string re = "https://zalo.onesms.vn/Conek/Error404.aspx";
+            string data = string.Format("api/GetData?function={0}&data1={1}&data2={2}", "zalo", user.fromuid, "DiemDanh");
             string myJson = Api.getDataObject("http://cloudapi.conek.vn", data);
-            if (myJson != null)
+            if (myJson.Length > 20)
             {
-                List<ThongTinCongTy> thongTinCongTy_Detail = Api.layDanhSachCongTyTheoJson(myJson);
-                if (thongTinCongTy_Detail != null)
+                List<ThongTinCongTy> dsCongty = Api.layDanhSachCongTyTheoJson(myJson);
+                if (dsCongty != null)
                 {
-                    int count = 0;
-                    ThongTinCongTy congty1 = new ThongTinCongTy();
-                    foreach (ThongTinCongTy congty in thongTinCongTy_Detail)
+                    List<ThongTinCongTy> dsCongtyON = new List<ThongTinCongTy>();
+                    foreach (ThongTinCongTy congty in dsCongty)
                     {
                         if (congty.Status.Equals("ON"))
                         {
-                            congty1 = congty;
-                            count++;
+                            dsCongtyON.Add(congty);
                         }
                     }
-                    if (count ==0)
+                    if (dsCongtyON.Count == 0)
                     {
-                        re = "https://zalo.onesms.vn/Conek/DangKiZalo.aspx";
+                        re = "https://zalo.onesms.vn/Conek/DangKi.aspx";
                     }
                     else
                     {
-                        if (count == 1)
+                        if (dsCongtyON.Count == 1)
                         {
-                            UserDetail.congty = congty1;
                             re = "https://zalo.onesms.vn/Conek/DSChamCong.aspx";
                         }
                         else
@@ -298,9 +258,9 @@ namespace OAZalo
                             re = "https://zalo.onesms.vn/Conek/ChonCongTy.aspx";
                         }
                     }
-                    
                 }
             }
+
             return re;
         }
         public static void ghilog(string nameFile, string msg)
@@ -318,7 +278,7 @@ namespace OAZalo
                     sw.WriteLine(str);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

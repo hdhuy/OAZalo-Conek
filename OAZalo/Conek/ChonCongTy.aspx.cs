@@ -16,8 +16,8 @@ namespace OAZalo.Conek
         public string message = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            message += "fromuid: " + UserDetail.fromuid;
-            string data = string.Format("api/GetData?function={0}&data1={1}&data2={2}", "zalo", "267264371630210613", "DiemDanh");
+            //267264371630210613
+            string data = string.Format("api/GetData?function={0}&data1={1}&data2={2}", "zalo", "", "DiemDanh");
             string myJson = Api.getDataObject("http://cloudapi.conek.vn", data);
             if (myJson != null)
             {

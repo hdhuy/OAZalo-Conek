@@ -28,6 +28,7 @@ namespace OAZalo.Conek
         public string message = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 rdTuNgay.SelectedDate = DateTime.Now;
@@ -80,7 +81,7 @@ namespace OAZalo.Conek
         }
         private void BindData(string ma)
         {
-            string data = "api/GetDataDiemDanh?function=all&company=Conek&fromday=2020-09-01&today=2020-09-15";
+            string data = string.Format("/api/GetDataDiemDanh?function=all&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay);
             List<StaffReport> lsr = getListStaffReport(data);
             if (lsr != null)
             {
@@ -361,5 +362,6 @@ namespace OAZalo.Conek
             string nameFileOutput = newName;
             localAPI.ExportExcelDynamic(serverPath, path, newName, nameFileOutput, 1, listCell, rowHeaderStart, rowStart, colStart, colEnd, dt, lstHeader, lstColumn, true);
         }
+
     }
 }

@@ -280,13 +280,6 @@
     <Compile Include="Conek\DangKi.aspx.designer.cs">
       <DependentUpon>DangKi.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Conek\DangKiZalo.aspx.cs">
-      <DependentUpon>DangKiZalo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Conek\DangKiZalo.aspx.designer.cs">
-      <DependentUpon>DangKiZalo.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Conek\DSChamCong.aspx.cs">
       <DependentUpon>DSChamCong.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -300,6 +293,13 @@
     </Compile>
     <Compile Include="Conek\DSNhanVien.aspx.designer.cs">
       <DependentUpon>DSNhanVien.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Conek\Error404.aspx.cs">
+      <DependentUpon>Error404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Conek\Error404.aspx.designer.cs">
+      <DependentUpon>Error404.aspx</DependentUpon>
     </Compile>
     <Compile Include="Conek\TCChamCong.aspx.cs">
       <DependentUpon>TCChamCong.aspx</DependentUpon>
@@ -1568,9 +1568,9 @@
     <Content Include="Assets\templates\plugins\wow\dist\wow.min.js" />
     <Content Include="Conek\ChonCongTy.aspx" />
     <Content Include="Conek\DangKi.aspx" />
-    <Content Include="Conek\DangKiZalo.aspx" />
     <Content Include="Conek\DSChamCong.aspx" />
     <Content Include="Conek\DSNhanVien.aspx" />
+    <Content Include="Conek\Error404.aspx" />
     <Content Include="Conek\TCChamCong.aspx" />
     <Content Include="Conek\ThongTinZalo.aspx" />
     <Content Include="Conek\TKGate3.aspx" />

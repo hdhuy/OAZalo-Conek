@@ -15,5 +15,9 @@ namespace OAZaloDataAccess.NhanVien
         public string Department { get; set; }
         public string Position { get; set; }
         public string Office { get; set; }
+        public string Vehicle { get; set; }
+        public string LicensePlate { get; set; }
+        public string ParkingTicket { get; set; }
+        public string TicketActive { get; set; }
     }
 }

@@ -10,14 +10,15 @@ namespace OAZaloDataAccess.BO
     public class UserDetail
     {
         //thongtin zalo
-        public static string strAppID = string.Empty;
-        public static string fromuid = string.Empty;
-        public static string strEvent = string.Empty;
-        public static string strMessage = string.Empty;
-        public static string strMessageIds = string.Empty;
-        public static string oaID = string.Empty;
-        //thong tin ca nhan
-        public static string sodienthoai;
-        public static ThongTinCongTy congty;
+        public string strAppID;
+        public string fromuid;
+        public string strEvent;
+        public string strMessage;
+        public string strMessageIds;
+        public string oaID;
+
+        public string sodienthoai;
+        public List<ThongTinCongTy> congty = new List<ThongTinCongTy>();
+        public string note;
     }
 }
