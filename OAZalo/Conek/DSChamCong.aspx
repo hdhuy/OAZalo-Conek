@@ -25,13 +25,11 @@
 
         <div class="container">
             <div class="row">
+                <%-- 
                 <div class="col-sm-3">
                     <telerik:RadComboBox ID="rcbCongty" runat="server" Width="100%" EmptyMessage="Chọn công ty" OnSelectedIndexChanged="rcbCongty_SelectedIndexChanged" AllowCustomText="true" Filter="Contains">
-                        <Items>
-                            <telerik:RadComboBoxItem Value="Conek" Text="Conek" />
-                        </Items>
                     </telerik:RadComboBox>
-                </div>
+                </div>--%>
                 <div class="col-sm-4">
                     <telerik:RadDatePicker Culture="vi-VN" RenderMode="Classic" ID="rdTuNgay" runat="server" Width="45%" MinDate="1900/1/1"
                         Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="Giá trị không hợp lệ"
@@ -65,7 +63,6 @@
                 </div>
                 <asp:Button ID="btnTimtheonhanvien" runat="server" Text="Tìm theo người này" CssClass="btn btn-danger" OnClick="btTimKiemtheonhanvien_Click" Width="170px" />
             </div>
-            <p><%=message %></p>
             <div class="row">
                 <div class="col-sm-12">
                     <%if (listStaffReport!=null)

@@ -20,7 +20,7 @@
                     </telerik:RadComboBox>
                 </div>
                 <div class="col-sm-3">
-                    <asp:Button ID="btTimKiem" runat="server" Text="Xem dữ liệu chấm công" CssClass="btn btn-danger" />
+                    <asp:Button ID="btnTimKiem" runat="server" Text="Xem dữ liệu chấm công" CssClass="btn btn-danger" OnClick="btnTimKiem_Click"/>
                 </div>
             </div>
         </form>

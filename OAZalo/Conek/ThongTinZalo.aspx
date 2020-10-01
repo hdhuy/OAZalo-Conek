@@ -7,8 +7,7 @@
     <title></title>
 </head>
 <body>
-   <p>strAppID: <%=strAppID%></p>
-    <p>fromuid: <% =fromuid%></p>
+
     <form id="form1" runat="server">
         <div>
         </div>

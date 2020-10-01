@@ -36,7 +36,8 @@
                                         <th>ID</th>
                                         <th>Tên</th>
                                         <th>Số điện thoại</th>
-                                         <th>Công ty</th>
+                                         <th>Phòng ban</th>
+                                         <th>Vị trí</th>
                                          <th>Ngày làm</th>
                                     </tr>
                                 </thead>
@@ -51,6 +52,7 @@
                                             <td><%=nhanvien.ten%></td>
                                             <td><%=nhanvien.sdt %></td>
                                             <td><%=nhanvien.phongban %></td>
+                                            <td><%=nhanvien.vitri %></td>
                                             <td><%=nhanvien.ngaylam %></td>
                                         </tr>
                                     <%} %>

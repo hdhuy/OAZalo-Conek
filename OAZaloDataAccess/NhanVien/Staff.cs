@@ -8,26 +8,26 @@ namespace OAZaloDataAccess.NhanVien
 {
     public class Staff
     {
-        public String staffID { get; set; }
-        public String staffName { get; set; }
-        public String companyName { get; set; }
-        public String deparment { get; set; }
+        public string staffID { get; set; }
+        public string staffName { get; set; }
+        public string companyName { get; set; }
+        public string deparment { get; set; }
         public string dayTouch { get; set; }
         public string timeHours { get; set; }
         public string timeLate { get; set; }
     }
     public class StaffReport
     {
-        public String staffID { get; set; }
-        public String staffName { get; set; }
-        public String companyName { get; set; }
-        public String deparment { get; set; }
+        public string staffID { get; set; }
+        public string staffName { get; set; }
+        public string companyName { get; set; }
+        public string deparment { get; set; }
         public string dayTouch { get; set; }
         public string timeStart { get; set; }
 
         public string timeOut { get; set; }
 
         public string time { get; set; }
-        public String note { get; set; }
+        public string note { get; set; }
     }
 }

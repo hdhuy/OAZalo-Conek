@@ -18,28 +18,53 @@ namespace OAZalo.Conek
 {
     public partial class DSChamCong : System.Web.UI.Page
     {
+        string uid = "";
         string tu_ngay = "";
         string den_ngay = "";
         string cong_ty = "";
+        string phong_ban = "";
+        string vi_tri = "";
         public LocalAPI localAPI = new LocalAPI();
-        public List<hienThiChamCong> dsHienthi = new List<hienThiChamCong>();
         public List<StaffReport> listStaffReport = new List<StaffReport>();
-        //public List<ChamCong> news = new List<ChamCong>();
+        public List<NhanVien> dsNhanvienDuocxem = new List<NhanVien>();
         public string message = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            
             if (!IsPostBack)
             {
+                layDuLieuTuURL();
                 rdTuNgay.SelectedDate = DateTime.Now;
                 rdDenNgay.SelectedDate = DateTime.Now;
-                rcbCongty.SelectedValue = "Conek";
                 tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
                 den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
-                cong_ty = "Conek";
-                BindData(null);
+                BindData();
+                layDsNhanVienDuocXem();
+                BindCboNV();
             }
+        }
+        private void layDuLieuTuURL()
+        {
+            string url = Request.Url.ToString();
+            //url = url.Replace("https://zalo.onesms.vn/Conek/DSChamCong.aspx/", "");
+            url = url.Replace("http://localhost:44388/Conek/DSChamCong.aspx/", "");
 
+            int uidEnd = url.IndexOf("$");
+            uid = url.Substring(0, uidEnd);
+
+            int companyEnd = url.IndexOf("$$");
+            int companyStart = uidEnd + 1;
+            int comapnyLength = companyEnd - companyStart;
+            cong_ty = url.Substring(companyStart, comapnyLength);
+
+            int departmentEnd = url.IndexOf("$$$");
+            int departmentStart = companyEnd + 2;
+            int departmentLength = departmentEnd - departmentStart;
+            phong_ban = url.Substring(departmentStart, departmentLength);
+
+            int positionEnd = url.IndexOf("$$$$");
+            int positionStart = departmentEnd + 3;
+            int positionLength = positionEnd - positionStart;
+            vi_tri = url.Substring(positionStart, positionLength);
         }
         protected void rdTuNgay_SelectedDateChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs e)
         {
@@ -53,23 +78,48 @@ namespace OAZalo.Conek
         }
         protected void rcbCongty_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            cong_ty = rcbCongty.SelectedValue;
+            //cong_ty = rcbCongty.SelectedValue;
             // BindData();
         }
         protected void btTimKiem_Click(object sender, EventArgs e)
         {
             tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
             den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
-            cong_ty = rcbCongty.SelectedValue;
-            BindData(null);
+            layDuLieuTuURL();
+            layDsNhanVienDuocXem();
+            BindCboNV();
+            BindData();
         }
         protected void btTimKiemtheonhanvien_Click(object sender, EventArgs e)
         {
             tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
             den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
-            cong_ty = rcbCongty.SelectedValue;
-            string ma_nhan_vien = rcbTennv.SelectedValue;
-            BindData(ma_nhan_vien);
+            layDuLieuTuURL();
+            int rcbTennvIndex = rcbTennv.SelectedIndex;
+            if (rcbTennvIndex < 0)
+            {
+                rcbTennvIndex=0;
+            }
+            BindData();
+            layDsNhanVienDuocXem();
+            BindCboNV();
+            if(vi_tri.Equals("Chairman")|| vi_tri.Equals("Manager"))
+            {
+                string nfcidContent = dsNhanvienDuocxem[rcbTennvIndex].nfcid;
+                IList<JToken> obj = JObject.Parse(nfcidContent);
+                string nfcid = ((JProperty)obj[0]).Name;
+
+                List<StaffReport> listStaffReportNew = new List<StaffReport>();
+                foreach (StaffReport a in listStaffReport)
+                {
+                    string staffid = a.staffID;
+                    if (staffid.Equals(nfcid))
+                    {
+                        listStaffReportNew.Add(a);
+                    }
+                }
+                listStaffReport = listStaffReportNew;
+            }
         }
         protected void rcbTennv_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -79,83 +129,67 @@ namespace OAZalo.Conek
         {
 
         }
-        private void BindData(string ma)
+        private void BindData()
         {
-            string data = string.Format("/api/GetDataDiemDanh?function=all&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay);
+            string data = "";
+            if (vi_tri.Equals("Chairman"))
+            {
+                data = string.Format("api/GetDataDiemDanh?function={0}&company={1}&fromday={2}&today={3}",
+                                        "all", cong_ty, tu_ngay, den_ngay);
+            }
+            else if(vi_tri.Equals("Manager"))
+            {
+                data = string.Format("api/GetDataDiemDanh?function={0}&company={1}&fromday={2}&today={3}&department={4}",
+                                    "department", cong_ty, tu_ngay, den_ngay, phong_ban);
+            }
+            else
+            {
+                data = string.Format("api/GetDataDiemDanh?function={0}&id={1}&company={2}&fromday={3}&today={4}",
+                        "aperson", uid, cong_ty, tu_ngay, den_ngay);
+            }
+
             List<StaffReport> lsr = getListStaffReport(data);
             if (lsr != null)
             {
                 listStaffReport = lsr;
             }
         }
-        private void BindData1(string nvid)
+        
+        private void layDsNhanVienDuocXem()
         {
-            string apiGetData = "";
-            if (nvid == null)
-            {
-                apiGetData = string.Format("/api/GetDataDiemDanh?function=all&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay);
-            }
-            else
-            {
-                apiGetData = string.Format("/api/GetDataDiemDanh?function=aperson&id={3}&company={0}&fromday={1}&today={2}", cong_ty, tu_ngay, den_ngay, nvid);
-            }
-            string myJson = Api.getDataObject("http://cloudapi.conek.vn", apiGetData);
+            string data = string.Format("api/GetData?function={0}&data1={1}&data2={2}", "all", cong_ty, "ON");
+            string myJson = Api.getDataObject("http://cloudapi.conek.vn", data);
             if (myJson != null)
             {
-                dsChamCong chamcongs = JsonConvert.DeserializeObject<dsChamCong>(myJson);
-                if (chamcongs != null)
+                dsNhanVien ketqua = JsonConvert.DeserializeObject<dsNhanVien>(myJson);
+                if (ketqua.table != null && ketqua.table.Count() > 0)
                 {
-                    string ma = "";
-                    string ngay = "";
-                    ArrayList datasource = new ArrayList();
-                    if (chamcongs.table != null)
-                        if (chamcongs.table.Count() > 0)
-
-                            foreach (ChamCong chamcong in chamcongs.table)
+                    foreach (NhanVien a in ketqua.table)
+                    {
+                        if (vi_tri.Equals("Chairman"))
+                        {
+                            dsNhanvienDuocxem.Add(a);
+                        }
+                        else if(vi_tri.Equals("Manager"))
+                        {
+                            if (a.department.Equals(phong_ban))
                             {
-                                if (!chamcong.staffid.Equals(ma) && !chamcong.daytouch.Equals(ngay))
-                                {
-
-                                }
-                                hienThiChamCong hienthi = new hienThiChamCong();
-                                hienthi.ma = chamcong.staffid;
-                                hienthi.ten = chamcong.staffname;
-                                hienthi.congty = chamcong.companyname;
-                                //hienthi.phongban = chamcong.department;
-                                //List<ChamCong> dstrungngay = new List<ChamCong>();
-                                //foreach (ChamCong timkiem in chamcongs.table)
-                                //{
-                                //    if (timkiem.staffid.Equals(chamcong.staffid) &&
-                                //        timkiem.daytouch.Equals(chamcong.daytouch))
-                                //    {
-                                //        dstrungngay.Add(timkiem);
-                                //    }
-                                //}
-                                //hienthi.phongban = "Trùng: " + dstrungngay.Count;
-                                //if (dstrungngay.Count > 0)
-                                //{
-                                //    hienthi.ngaygiovao = chamcong.daytouch + " " + dstrungngay[0].timehours;
-                                //    hienthi.ngaygiora = chamcong.daytouch + " " + dstrungngay[dstrungngay.Count - 1].timehours;
-                                //}
-                                //else
-                                //{
-                                //    hienthi.ngaygiovao = chamcong.daytouch + " " + chamcong.timehours;
-                                //    //hienthi.ngaygiora = chamcong.daytouch + " " + dstrungngay[dstrungngay.Count - 1].timehours;
-                                //}
-                                hienthi.ngaygiovao = chamcong.daytouch + " " + chamcong.timehours;
-                                hienthi.ngaygiora = chamcong.daytouch + " " + chamcong.timehours;
-                                hienthi.muon = chamcong.timelate;
-                                dsHienthi.Add(hienthi);
-                                datasource.Add(hienthi.ma);
-                                ma = chamcong.staffid;
-                                ngay = chamcong.daytouch;
+                                dsNhanvienDuocxem.Add(a);
                             }
-
-                    rcbTennv.DataSource = datasource;
-                    rcbTennv.DataBind();
+                        }
+                    }
                 }
             }
-
+        }
+        private void BindCboNV()
+        {
+            List<string> cboItem = new List<string>();
+            foreach (NhanVien a in dsNhanvienDuocxem)
+            {
+                cboItem.Add(a.name);
+            }
+            rcbTennv.DataSource = cboItem;
+            rcbTennv.DataBind();
         }
         List<StaffReport> getListStaffReport(string data)
         {
@@ -163,7 +197,7 @@ namespace OAZalo.Conek
             try
             {
                 string content = Api.getDataObject("http://cloudapi.conek.vn", data);
-                List <Staff> staffList = new List<Staff>();
+                List<Staff> staffList = new List<Staff>();
                 JObject jObject = JObject.Parse(content);
                 JArray jArray = JArray.Parse(jObject["table"].ToString());
 
@@ -294,10 +328,36 @@ namespace OAZalo.Conek
         }
         protected void btExport_Click(object sender, EventArgs e)
         {
-            tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
-            den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
-            cong_ty = rcbCongty.SelectedValue;
-            BindData(null);
+            //tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
+            //den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
+            //layDuLieuTuURL();
+            //int rcbTennvIndex = rcbTennv.SelectedIndex;
+            //if (rcbTennvIndex < 0)
+            //{
+            //    rcbTennvIndex = 0;
+            //}
+            //BindData();
+            //layDsNhanVienDuocXem();
+            //BindCboNV();
+            //if (vi_tri.Equals("Chairman") || vi_tri.Equals("Manager"))
+            //{
+            //    string nfcidContent = dsNhanvienDuocxem[rcbTennvIndex].nfcid;
+            //    IList<JToken> obj = JObject.Parse(nfcidContent);
+            //    string nfcid = ((JProperty)obj[0]).Name;
+
+            //    List<StaffReport> listStaffReportNew = new List<StaffReport>();
+            //    foreach (StaffReport a in listStaffReport)
+            //    {
+            //        string staffid = a.staffID;
+            //        if (staffid.Equals(nfcid))
+            //        {
+            //            listStaffReportNew.Add(a);
+            //        }
+            //    }
+            //    listStaffReport = listStaffReportNew;
+            //}
+
+
             DataTable dt = new DataTable();
             string serverPath = Server.MapPath("~");
             string path = String.Format("{0}\\ExportTemplates\\FileDynamic.xlsx", Server.MapPath("~"));
@@ -321,6 +381,11 @@ namespace OAZalo.Conek
             lstHeader.Add(new ExcelHeaderEntity { name = "Bộ phận", colM = 1, rowM = 1, width = 20 });
             lstColumn.Add(new ExcelEntity { Name = "Bo_Phan", Align = XLAlignmentHorizontalValues.Left, Color = XLColor.Black, Type = "String" });
 
+            DataColumn col3add = new DataColumn("Ngay_Cham");
+            dt.Columns.Add(col3add);
+            lstHeader.Add(new ExcelHeaderEntity { name = "Ngày chấm", colM = 1, rowM = 1, width = 20 });
+            lstColumn.Add(new ExcelEntity { Name = "Ngay_Cham", Align = XLAlignmentHorizontalValues.Left, Color = XLColor.Black, Type = "String" });
+
             DataColumn col3 = new DataColumn("Thoi_Gian_Vao");
             dt.Columns.Add(col3);
             lstHeader.Add(new ExcelHeaderEntity { name = "Thời gian checkin", colM = 1, rowM = 1, width = 20 });
@@ -337,15 +402,16 @@ namespace OAZalo.Conek
             lstHeader.Add(new ExcelHeaderEntity { name = "Muộn (số phút)", colM = 1, rowM = 1, width = 20 });
             lstColumn.Add(new ExcelEntity { Name = "Muon", Align = XLAlignmentHorizontalValues.Left, Color = XLColor.Black, Type = "String" });
 
-            for (int i = 0; i < dsHienthi.Count; i++)
+            for (int i = 0; i < listStaffReport.Count; i++)
             {
                 DataRow row = dt.NewRow();
-                row["Ma_Nhan_Vien"] = dsHienthi[i].ma;
-                row["Ho_Ten"] = dsHienthi[i].ten;
-                row["Bo_Phan"] = dsHienthi[i].phongban;
-                row["Thoi_Gian_Vao"] = dsHienthi[i].ngaygiovao;
-                row["Thoi_Gian_Ra"] = dsHienthi[i].ngaygiora;
-                row["Muon"] = dsHienthi[i].muon;
+                row["Ma_Nhan_Vien"] = listStaffReport[i].staffID;
+                row["Ho_Ten"] = listStaffReport[i].staffName;
+                row["Bo_Phan"] = listStaffReport[i].deparment;
+                row["Ngay_Cham"] = listStaffReport[i].dayTouch;
+                row["Thoi_Gian_Vao"] = listStaffReport[i].timeStart;
+                row["Thoi_Gian_Ra"] =  listStaffReport[i].timeOut;
+                row["Muon"] = listStaffReport[i].time;
                 dt.Rows.Add(row);
             }
             int rowHeaderStart = 6;
