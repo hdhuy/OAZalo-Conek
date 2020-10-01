@@ -1722,7 +1722,6 @@
     <Content Include="Assets\templates\plugins\OwlCarousel2-2.3.4\docs_src\templates\partials\vendors.hbs" />
     <Content Include="Assets\templates\plugins\OwlCarousel2-2.3.4\ISSUE_TEMPLATE.md" />
     <Content Include="Assets\templates\plugins\OwlCarousel2-2.3.4\LICENSE" />
-    <Content Include="Assets\templates\plugins\OwlCarousel2-2.3.4\OwlCarousel2-2.3.4.zip" />
     <Content Include="Assets\templates\plugins\OwlCarousel2-2.3.4\package-lock.json" />
     <Content Include="Assets\templates\plugins\OwlCarousel2-2.3.4\package.json" />
     <Content Include="Assets\templates\plugins\OwlCarousel2-2.3.4\README.md" />

@@ -18,7 +18,6 @@ namespace OAZalo
 {
     public partial class ZaloCallBack : System.Web.UI.Page
     {
-        public UserDetail user;
         protected void Page_Load(object sender, EventArgs e)
         {
             string strAppID = string.Empty;
@@ -73,22 +72,25 @@ namespace OAZalo
                     {
                         try
                         {
-                            user.fromuid = fromuid;
                             //Thông tin người click zalo
                             if (strMessage == "#ttzalo")
                             {
-                                traVeNutZalo("Xem thông tin zalo của bạn", "Thông tin zalo", "https://zalo.onesms.vn/Conek/ThongTinZalo.aspx", fromuid);
+                                traVeNutZalo("Xem thông tin zalo của bạn", "Thông tin zalo", "https://zalo.onesms.vn/Conek/ThongTinZalo.aspx" + "/" + fromuid + "$/", fromuid);
                             }
                             //Danh sách chấm công
                             if (strMessage == "#dschamcong")
                             {
-                                string url = checkId();
-                                traVeNutZalo("Xem danh sách chấm công","Danh sách chấm công",url, fromuid);
+                                traVeNutZalo("Xem danh sách chấm công","Danh sách chấm công", "https://zalo.onesms.vn/Conek/ChonCongTy.aspx" +  "/" + fromuid + "$/", fromuid);
                             }
                             //Thống kê gate 3
                             if (strMessage == "#tkg3")
                             {
                                 traVeNutZalo("Xem thống kê sản lượng gate 3", "Thống kê sản lượng gate 3", "https://zalo.onesms.vn/Conek/TKGate3.aspx", fromuid);
+                            }
+                            //Danh sách nhân viên
+                            if (strMessage == "#nhansu")
+                            {
+                                traVeNutZalo("Xem danh sách nhân viên", "Danh sách nhân viên", "https://zalo.onesms.vn/Conek/DSNhanVien.aspx", fromuid);
                             }
                         }
                         catch (Exception ex)
@@ -130,6 +132,7 @@ namespace OAZalo
                 getData(postData);
             }
         }
+
         protected void traVeNutZalo(string text, string title, string url, string fromuid)
         {
             try
@@ -225,44 +228,7 @@ namespace OAZalo
             dataStream.Close();
             res.Close();
         }
-        protected string checkId()
-        {
-            string re = "https://zalo.onesms.vn/Conek/Error404.aspx";
-            string data = string.Format("api/GetData?function={0}&data1={1}&data2={2}", "zalo", user.fromuid, "DiemDanh");
-            string myJson = Api.getDataObject("http://cloudapi.conek.vn", data);
-            if (myJson.Length > 20)
-            {
-                List<ThongTinCongTy> dsCongty = Api.layDanhSachCongTyTheoJson(myJson);
-                if (dsCongty != null)
-                {
-                    List<ThongTinCongTy> dsCongtyON = new List<ThongTinCongTy>();
-                    foreach (ThongTinCongTy congty in dsCongty)
-                    {
-                        if (congty.Status.Equals("ON"))
-                        {
-                            dsCongtyON.Add(congty);
-                        }
-                    }
-                    if (dsCongtyON.Count == 0)
-                    {
-                        re = "https://zalo.onesms.vn/Conek/DangKi.aspx";
-                    }
-                    else
-                    {
-                        if (dsCongtyON.Count == 1)
-                        {
-                            re = "https://zalo.onesms.vn/Conek/DSChamCong.aspx";
-                        }
-                        else
-                        {
-                            re = "https://zalo.onesms.vn/Conek/ChonCongTy.aspx";
-                        }
-                    }
-                }
-            }
-
-            return re;
-        }
+        
         public static void ghilog(string nameFile, string msg)
         {
             try

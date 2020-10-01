@@ -17,15 +17,17 @@ namespace OAZalo.Conek
 {
     public partial class DangKi : System.Web.UI.Page
     {
+        public string uid="";
         public string message = "";
+        public string req;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //ArrayList list = new ArrayList();
-            //foreach(ThongTinCongTy cty in UserDetail.congty)
-            //{
-            //    list.Add(cty.Company);
-            //}
-            //Button1.Click += new EventHandler(this.btnDangKi_Click);
+            string url = Request.Url.ToString();
+            //url = url.Replace("http://localhost:44388/Conek/DangKi.aspx/", "");
+            url = url.Replace("https://zalo.onesms.vn/Conek/DangKi.aspx/", "");
+            int index = url.IndexOf("$");
+            url = url.Substring(0, index);
+            uid = url;
         }
         public void btnDangKi_Click(object sender, EventArgs e)
         {
@@ -33,12 +35,12 @@ namespace OAZalo.Conek
             string sdt = txtSdt.Value;
             string congty = cboCongty.Value;
             string dichvu = "DiemDanh";
-            string idzl = "";//sau chuyển qua UserDetai.fromuid
+            string idzl = uid;//sau chuyển qua UserDetai.fromuid
             if (sdt.Length > 0)
             {
                 if (kiemTraTaiKhoan(idzl,sdt, congty, dichvu))
                 {
-                    message += "Số điện thoại này đã được sử dụng !";
+                    message += "Số điện thoại này đã đăng kí !";
                 }
                 else
                 {
@@ -77,7 +79,7 @@ namespace OAZalo.Conek
                 }
                 else
                 {
-                    message += "Đăng kí thất bại ! ("+kiemtra.err_code+") (Số điện thoại này chưa có trong danh sách nhân sự)";
+                    message += "Đăng kí thất bại ! ("+kiemtra.err_code+") (Số điện thoại này chưa được cấp phép<br>hoặc đã được đăng kí !)";
                 }
             }
         }

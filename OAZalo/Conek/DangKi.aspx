@@ -19,14 +19,12 @@
             <br />
             <br />
             <br />
-            <div class="omb_login">
-
-                <div class="row omb_row-sm-offset-3">
-                    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-                        <h1 style="font-weight: bold; color: aquamarine">ĐĂNG KÍ ZALO</h1>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="font-weight: bold; color: aquamarine">ĐĂNG KÍ ZALO</h1>
                         <p style="color: red"><%=message %></p>
                         <%-- NHẬP SỐ ĐIỆN THOẠI --%>
-                        <h4>Nhập số điện thoại</h4>
+                        <h2>Nhập số điện thoại</h2>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                             <input type="text" id="txtSdt" runat="server" class="form-control" name="newid" placeholder="Nhập số điện thoại..." />
@@ -42,7 +40,7 @@
                         <span class="help-block"></span>
                         <hr />--%>
                         <%-- SELECT BOX CHỌN CÔNG TY --%>
-                        <h4>Chọn công ty</h4>
+                        <h2>Chọn công ty</h2>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-group"></i></span>
                             <select runat="server" id="cboCongty" class="form-control">
@@ -52,7 +50,7 @@
                         <span class="help-block"></span>
                         <hr />
                         <%-- SELECT BOX CHỌN DỊCH VỤ --%>
-                        <h4>Chọn dịch vụ</h4>
+                        <h2>Chọn dịch vụ</h2>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-comment-o"></i></span>
                             <select runat="server" id="cboDichvu" class="form-control">
@@ -66,16 +64,27 @@
                         <asp:Button ID="Button1" Text="ĐĂNG KÍ" class="btn btn-lg btn-primary btn-block"
                             OnClick="btnDangKi_Click"
                             runat="server" />
-                    </div>
                 </div>
             </div>
-
-
-
-
         </div>
     </form>
     <style>
+        #txtSdt{
+            height:100px;
+            font-size:25px;
+        }
+        #cboCongty{
+            height:100px;
+            font-size:25px;
+        }
+        #cboDichvu{
+            height:100px;
+            font-size:25px;
+        }
+        #Button1{
+            height:100px;
+            font-size:25px;
+        }
         .omb_login .omb_loginForm .input-group.i {
             width: 2em;
         }

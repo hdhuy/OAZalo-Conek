@@ -10,20 +10,17 @@ namespace OAZalo.Conek
 {
     public partial class ThongTinZalo : System.Web.UI.Page
     {
-        public string strAppID;
-        public string fromuid;
-        public string strEvent;
-        public string strMessage;
-        public string strMessageIds;
-        public string oaID;
+        public string uid="";
+        public string message="";
         protected void Page_Load(object sender, EventArgs e)
         {
-             //strAppID=UserDetail.strAppID;
-             //fromuid=UserDetail.fromuid;
-             //strEvent=UserDetail.strEvent;
-             //strMessage= UserDetail.strMessage;
-             //strMessageIds= UserDetail.strMessageIds;
-             //oaID= UserDetail.oaID;
+            string url = Request.Url.ToString();
+            url = url.Replace("https://zalo.onesms.vn/Conek/ThongTinZalo.aspx/", "");
+            int index = url.IndexOf("$");
+            url = url.Substring(0, index);
+
+            uid = "ZaloID: <br>" + url;
+            message += "URL: <br>" + Request.Url.ToString();
         }
 }
 }

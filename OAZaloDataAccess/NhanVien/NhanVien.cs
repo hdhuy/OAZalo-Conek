@@ -16,6 +16,7 @@ namespace OAZaloDataAccess.NhanVien
         public string ten;
         public string sdt;
         public string phongban;
+        public string vitri;
         public string ngaylam;
     }
     public class NhanVien
@@ -31,6 +32,7 @@ namespace OAZaloDataAccess.NhanVien
         public object socialinsurance { get; set; }
         public object taxnumber { get; set; }
         public string department { get; set; }
+        public string position { get; set; }
         public string dateon { get; set; }
         public object dateoff { get; set; }
         public string status { get; set; }
