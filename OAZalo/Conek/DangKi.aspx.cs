@@ -76,6 +76,7 @@ namespace OAZalo.Conek
                 if (kiemtra.err_code.Equals("0"))
                 {
                     message += "Đã đăng kí thành công !";
+                    Response.Redirect("https://zalo.onesms.vn/Conek/ChonCongTy.aspx" + "/" + uid + "$chamcong$$/");
                 }
                 else
                 {

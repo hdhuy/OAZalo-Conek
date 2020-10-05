@@ -93,6 +93,8 @@
                                     <td><%=nhanvien.dayTouch %></td>
                                     <td><%=nhanvien.timeStart %></td>
                                     <td><%=nhanvien.timeOut %></td>
+                                    <%  int intTime = Int32.Parse(nhanvien.time);
+                                        if(intTime<0){nhanvien.time="0";}%>
                                     <td><%=nhanvien.time %></td>
                                     <td><%=nhanvien.note %></td>
                                 </tr>

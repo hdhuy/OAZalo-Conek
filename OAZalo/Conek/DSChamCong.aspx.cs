@@ -45,26 +45,14 @@ namespace OAZalo.Conek
         private void layDuLieuTuURL()
         {
             string url = Request.Url.ToString();
-            //url = url.Replace("https://zalo.onesms.vn/Conek/DSChamCong.aspx/", "");
+            url = url.Replace("https://zalo.onesms.vn/Conek/DSChamCong.aspx/", "");
             url = url.Replace("http://localhost:44388/Conek/DSChamCong.aspx/", "");
+            string[] arr = url.Split('$');
 
-            int uidEnd = url.IndexOf("$");
-            uid = url.Substring(0, uidEnd);
-
-            int companyEnd = url.IndexOf("$$");
-            int companyStart = uidEnd + 1;
-            int comapnyLength = companyEnd - companyStart;
-            cong_ty = url.Substring(companyStart, comapnyLength);
-
-            int departmentEnd = url.IndexOf("$$$");
-            int departmentStart = companyEnd + 2;
-            int departmentLength = departmentEnd - departmentStart;
-            phong_ban = url.Substring(departmentStart, departmentLength);
-
-            int positionEnd = url.IndexOf("$$$$");
-            int positionStart = departmentEnd + 3;
-            int positionLength = positionEnd - positionStart;
-            vi_tri = url.Substring(positionStart, positionLength);
+            uid = arr[0];
+            cong_ty = arr[1];
+            phong_ban = arr[2];
+            vi_tri = arr[3];
         }
         protected void rdTuNgay_SelectedDateChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs e)
         {
@@ -96,29 +84,40 @@ namespace OAZalo.Conek
             den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
             layDuLieuTuURL();
             int rcbTennvIndex = rcbTennv.SelectedIndex;
-            if (rcbTennvIndex < 0)
-            {
-                rcbTennvIndex=0;
-            }
             BindData();
             layDsNhanVienDuocXem();
             BindCboNV();
             if(vi_tri.Equals("Chairman")|| vi_tri.Equals("Manager"))
             {
-                string nfcidContent = dsNhanvienDuocxem[rcbTennvIndex].nfcid;
-                IList<JToken> obj = JObject.Parse(nfcidContent);
-                string nfcid = ((JProperty)obj[0]).Name;
-
-                List<StaffReport> listStaffReportNew = new List<StaffReport>();
-                foreach (StaffReport a in listStaffReport)
+                if (rcbTennvIndex >= 0)
                 {
-                    string staffid = a.staffID;
-                    if (staffid.Equals(nfcid))
+                    string nfcidContent = dsNhanvienDuocxem[rcbTennvIndex].nfcid;
+                    string nfcid = "";
+                    IList<JToken> list = JObject.Parse(nfcidContent);
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        listStaffReportNew.Add(a);
+                        //lấy ra json [i] của phonenumberList
+                        var phonenumberJson = ((JProperty)list[i]).Value.ToString();
+                        //chuyển thành đối tượng
+                        NFCID EntityNFCID = JsonConvert.DeserializeObject<NFCID>(phonenumberJson);
+                        //tìm số điện thoại có trạng thái là ON
+                        if (EntityNFCID.Status.Equals("ON"))
+                        {
+                            //nếu là ON thì đặt nv sdt
+                            nfcid = EntityNFCID.nfcid;
+                        }
                     }
+                    List<StaffReport> listStaffReportNew = new List<StaffReport>();
+                    foreach (StaffReport a in listStaffReport)
+                    {
+                        string staffid = a.staffID;
+                        if (staffid.Equals(nfcid))
+                        {
+                            listStaffReportNew.Add(a);
+                        }
+                    }
+                    listStaffReport = listStaffReportNew;
                 }
-                listStaffReport = listStaffReportNew;
             }
         }
         protected void rcbTennv_SelectedIndexChanged(object sender, EventArgs e)
@@ -328,35 +327,46 @@ namespace OAZalo.Conek
         }
         protected void btExport_Click(object sender, EventArgs e)
         {
-            //tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
-            //den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
-            //layDuLieuTuURL();
-            //int rcbTennvIndex = rcbTennv.SelectedIndex;
-            //if (rcbTennvIndex < 0)
-            //{
-            //    rcbTennvIndex = 0;
-            //}
-            //BindData();
-            //layDsNhanVienDuocXem();
-            //BindCboNV();
-            //if (vi_tri.Equals("Chairman") || vi_tri.Equals("Manager"))
-            //{
-            //    string nfcidContent = dsNhanvienDuocxem[rcbTennvIndex].nfcid;
-            //    IList<JToken> obj = JObject.Parse(nfcidContent);
-            //    string nfcid = ((JProperty)obj[0]).Name;
+            tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
+            den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyy-MM-dd");
+            layDuLieuTuURL();
+            int rcbTennvIndex = rcbTennv.SelectedIndex;
+            BindData();
+            layDsNhanVienDuocXem();
+            BindCboNV();
+            if (vi_tri.Equals("Chairman") || vi_tri.Equals("Manager"))
+            {
+                if (rcbTennvIndex >= 0)
+                {
+                    string nfcidContent = dsNhanvienDuocxem[rcbTennvIndex].nfcid;
+                    string nfcid = "";
+                    IList<JToken> list = JObject.Parse(nfcidContent);
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        //lấy ra json [i] của phonenumberList
+                        var phonenumberJson = ((JProperty)list[i]).Value.ToString();
+                        //chuyển thành đối tượng
+                        NFCID EntityNFCID = JsonConvert.DeserializeObject<NFCID>(phonenumberJson);
+                        //tìm số điện thoại có trạng thái là ON
+                        if (EntityNFCID.Status.Equals("ON"))
+                        {
+                            //nếu là ON thì đặt nv sdt
+                            nfcid = EntityNFCID.nfcid;
+                        }
+                    }
 
-            //    List<StaffReport> listStaffReportNew = new List<StaffReport>();
-            //    foreach (StaffReport a in listStaffReport)
-            //    {
-            //        string staffid = a.staffID;
-            //        if (staffid.Equals(nfcid))
-            //        {
-            //            listStaffReportNew.Add(a);
-            //        }
-            //    }
-            //    listStaffReport = listStaffReportNew;
-            //}
-
+                    List<StaffReport> listStaffReportNew = new List<StaffReport>();
+                    foreach (StaffReport a in listStaffReport)
+                    {
+                        string staffid = a.staffID;
+                        if (staffid.Equals(nfcid))
+                        {
+                            listStaffReportNew.Add(a);
+                        }
+                    }
+                    listStaffReport = listStaffReportNew;
+                }
+            }
 
             DataTable dt = new DataTable();
             string serverPath = Server.MapPath("~");

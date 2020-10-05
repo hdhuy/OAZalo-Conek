@@ -10,14 +10,19 @@ namespace OAZaloDataAccess.NhanVien
     {
         public List<NhanVien> table { get; set; }
     }
-    public class hienThiNhanVien
+    public class SoDienThoai
     {
-        public string ma;
-        public string ten;
-        public string sdt;
-        public string phongban;
-        public string vitri;
-        public string ngaylam;
+        public string Phonenumber { get; set; }
+        public string Status { get; set; }
+        public string DateOn { get; set; }
+        public string DateOff { get; set; }
+    }
+    public class NFCID
+    {
+        public string nfcid { get; set; }
+        public string Status { get; set; }
+        public string DateOn { get; set; }
+        public string DateOff { get; set; }
     }
     public class NhanVien
     {
