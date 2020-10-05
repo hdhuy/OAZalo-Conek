@@ -39,6 +39,8 @@
                                          <th>Phòng ban</th>
                                          <th>Vị trí</th>
                                          <th>Ngày làm</th>
+                                         <th>Trạng thái</th>
+                                         <th>Ngày nghỉ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,12 +50,14 @@
                                             dem = dem + 1; %>
                                         <tr>
                                             <td><%=dem %></td>
-                                            <td><%=nhanvien.ma %></td>
-                                            <td><%=nhanvien.ten%></td>
-                                            <td><%=nhanvien.sdt %></td>
-                                            <td><%=nhanvien.phongban %></td>
-                                            <td><%=nhanvien.vitri %></td>
-                                            <td><%=nhanvien.ngaylam %></td>
+                                            <td><%=nhanvien.id %></td>
+                                            <td><%=nhanvien.name%></td>
+                                            <td><%=nhanvien.phonenumber %></td>
+                                            <td><%=nhanvien.department %></td>
+                                            <td><%=nhanvien.position %></td>
+                                            <td><%=nhanvien.dateon %></td>
+                                            <td><%=nhanvien.status %></td>
+                                            <td><%=nhanvien.dateoff %></td>
                                         </tr>
                                     <%} %>
                                 </tbody>

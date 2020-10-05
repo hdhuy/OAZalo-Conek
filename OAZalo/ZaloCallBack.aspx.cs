@@ -73,24 +73,24 @@ namespace OAZalo
                         try
                         {
                             //Thông tin người click zalo
-                            if (strMessage == "#ttzalo")
-                            {
-                                traVeNutZalo("Xem thông tin zalo của bạn", "Thông tin zalo", "https://zalo.onesms.vn/Conek/ThongTinZalo.aspx" + "/" + fromuid + "$/", fromuid);
-                            }
+                            //if (strMessage == "#ttzalo")
+                            //{
+                            //    traVeNutZalo("Xem thông tin zalo của bạn", "Thông tin zalo", "https://zalo.onesms.vn/Conek/ThongTinZalo.aspx" + "/" + fromuid + "$/", fromuid);
+                            //}
                             //Danh sách chấm công
                             if (strMessage == "#dschamcong")
                             {
-                                traVeNutZalo("Xem danh sách chấm công","Danh sách chấm công", "https://zalo.onesms.vn/Conek/ChonCongTy.aspx" +  "/" + fromuid + "$/", fromuid);
+                                traVeNutZalo("Xem danh sách chấm công","Danh sách chấm công", "https://zalo.onesms.vn/Conek/ChonCongTy.aspx/" +  fromuid + "$chamcong$/", fromuid);
                             }
                             //Thống kê gate 3
                             if (strMessage == "#tkg3")
                             {
-                                traVeNutZalo("Xem thống kê sản lượng gate 3", "Thống kê sản lượng gate 3", "https://zalo.onesms.vn/Conek/TKGate3.aspx", fromuid);
+                                traVeNutZalo("Xem thống kê sản lượng gate 3", "Thống kê sản lượng gate 3", "https://zalo.onesms.vn/Conek/TKGate3.aspx/"+ fromuid + "$/", fromuid);
                             }
                             //Danh sách nhân viên
                             if (strMessage == "#nhansu")
                             {
-                                traVeNutZalo("Xem danh sách nhân viên", "Danh sách nhân viên", "https://zalo.onesms.vn/Conek/DSNhanVien.aspx", fromuid);
+                                traVeNutZalo("Xem danh sách nhân viên", "Danh sách nhân viên", "https://zalo.onesms.vn/Conek/ChonCongTy.aspx/" +  fromuid + "$nhanvien$/", fromuid);
                             }
                         }
                         catch (Exception ex)

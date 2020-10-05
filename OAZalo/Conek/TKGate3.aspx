@@ -16,6 +16,28 @@
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
+         <div class="col-sm-4">
+                    <telerik:RadDatePicker Culture="vi-VN" RenderMode="Classic" ID="rdTuNgay" runat="server" Width="45%" MinDate="1900/1/1"
+                        Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="Giá trị không hợp lệ"
+                        Calendar-FastNavigationSettings-TodayButtonCaption="Hôm nay"
+                        DatePopupButton-ToolTip="Ngày bắt đầu"
+                        Calendar-FastNavigationSettings-OkButtonCaption="Chọn"
+                        Calendar-FastNavigationSettings-CancelButtonCaption="Hủy">
+                        <DateInput DateFormat="dd/MM/yyyy"></DateInput>
+                    </telerik:RadDatePicker>
+                    &nbsp;--&nbsp;
+                        <telerik:RadDatePicker Culture="vi-VN" RenderMode="Classic" ID="rdDenNgay" runat="server" Width="45%" MinDate="1900/1/1"
+                            Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="Giá trị không hợp lệ"
+                            Calendar-FastNavigationSettings-TodayButtonCaption="Hôm nay"
+                            DatePopupButton-ToolTip="Ngày kết thúc"
+                            Calendar-FastNavigationSettings-OkButtonCaption="Chọn"
+                            Calendar-FastNavigationSettings-CancelButtonCaption="Hủy">
+                            <DateInput DateFormat="dd/MM/yyyy"></DateInput>
+                        </telerik:RadDatePicker>
+                </div>
+                <div class="col-sm-3">
+                    <asp:Button ID="btTimKiem" runat="server" Text="Tìm kiếm" CssClass="btn btn-danger" OnClick="btTimKiem_Click" />
+                </div>
         <div class="row">
             <div class="container">
                 <%if (lstSanLuong.Count > 0)
