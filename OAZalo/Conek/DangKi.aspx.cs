@@ -19,15 +19,15 @@ namespace OAZalo.Conek
     {
         public string uid="";
         public string message = "";
-        public string req;
+        public string dichvu="";
         protected void Page_Load(object sender, EventArgs e)
         {
             string url = Request.Url.ToString();
             //url = url.Replace("http://localhost:44388/Conek/DangKi.aspx/", "");
             url = url.Replace("https://zalo.onesms.vn/Conek/DangKi.aspx/", "");
-            int index = url.IndexOf("$");
-            url = url.Substring(0, index);
-            uid = url;
+            string[] arr = url.Split('$');
+            uid = arr[0];
+            dichvu = arr[1];
         }
         public void btnDangKi_Click(object sender, EventArgs e)
         {
@@ -76,7 +76,7 @@ namespace OAZalo.Conek
                 if (kiemtra.err_code.Equals("0"))
                 {
                     message += "Đã đăng kí thành công !";
-                    Response.Redirect("https://zalo.onesms.vn/Conek/ChonCongTy.aspx" + "/" + uid + "$chamcong$$/");
+                    Response.Redirect("https://zalo.onesms.vn/Conek/ChonCongTy.aspx/" + uid + "$"+dichvu+"$");
                 }
                 else
                 {

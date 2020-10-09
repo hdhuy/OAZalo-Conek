@@ -322,6 +322,13 @@
     <Compile Include="Conek\TKGate3.aspx.designer.cs">
       <DependentUpon>TKGate3.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Conek\UuDaiSamsung.aspx.cs">
+      <DependentUpon>UuDaiSamsung.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Conek\UuDaiSamsung.aspx.designer.cs">
+      <DependentUpon>UuDaiSamsung.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Default.aspx.cs">
@@ -1395,6 +1402,26 @@
     <Content Include="Assets\ckfinder\_samples\skin_v1.html" />
     <Content Include="Assets\ckfinder\_samples\standalone.html" />
     <Content Include="Assets\ckfinder\_samples\standalone_v1.html" />
+    <Content Include="Assets\Samsung_files\All_GNB_624X624_canvas_featured.jpg" />
+    <Content Include="Assets\Samsung_files\assistedservicestorefront.css" />
+    <Content Include="Assets\Samsung_files\call-answer.png" />
+    <Content Include="Assets\Samsung_files\customer360.css" />
+    <Content Include="Assets\Samsung_files\font-awesome.min.css" />
+    <Content Include="Assets\Samsung_files\global-samsung-logo.svg" />
+    <Content Include="Assets\Samsung_files\GNB_IT_624x624_curved-monitor.png" />
+    <Content Include="Assets\Samsung_files\GNB_Qled8K.png" />
+    <Content Include="Assets\Samsung_files\im0076_gnb-feature-image_624x624.jpg" />
+    <Content Include="Assets\Samsung_files\ringtone.css" />
+    <Content Include="Assets\Samsung_files\saved_resource.html" />
+    <Content Include="Assets\Samsung_files\storeFinder.css" />
+    <Content Include="Assets\Samsung_files\style-vn.css" />
+    <Content Include="Assets\Samsung_files\style.css" />
+    <Content Include="Assets\Samsung_files\svg.css" />
+    <Content Include="Assets\Samsung_files\thu-4-vui-ve-080920.jpg" />
+    <Content Include="Assets\Samsung_files\thu-4-vui-ve-160920-sku.png" />
+    <Content Include="Assets\Samsung_files\tokodpopaygatepayment.css" />
+    <Content Include="Assets\Samsung_files\tokolaybuypaymentservices.css" />
+    <Content Include="Assets\Samsung_files\tokoptsantanderpayment.css" />
     <Content Include="Assets\templates\js\function.js" />
     <Content Include="Assets\templates\js\jsmobile.js" />
     <Content Include="Assets\templates\js\tootip\mytooltip.js" />
@@ -1574,6 +1601,7 @@
     <Content Include="Conek\TCChamCong.aspx" />
     <Content Include="Conek\ThongTinZalo.aspx" />
     <Content Include="Conek\TKGate3.aspx" />
+    <Content Include="Conek\UuDaiSamsung.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1750,6 +1778,22 @@
     <Content Include="Assets\templates\plugins\wow\dist\wow.min.js.gz" />
     <Content Include="ExportTemplates\FileDynamic.xlsx" />
     <Content Include="ZaloCallBack.aspx" />
+    <Content Include="Assets\Samsung_files\0e7a672029" />
+    <Content Include="Assets\Samsung_files\1d7fc837" />
+    <Content Include="Assets\Samsung_files\addons_responsive.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\all_responsive.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\api.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\gtm.js%281%29.tải xuống" />
+    <Content Include="Assets\Samsung_files\gtm.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\jquery.min.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\libs.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\override-vn.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\recaptcha__vi.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\RM3GE-HLSF4-E59YF-2LMBC-K6YKY" />
+    <Content Include="Assets\Samsung_files\satelliteLib-770518545ab6f770742983802aa7e9610b54692b.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\sqs.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\sqs_s.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\vn_responsive.js.tải xuống" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
