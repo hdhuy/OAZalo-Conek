@@ -308,6 +308,13 @@
     <Compile Include="Conek\TCChamCong.aspx.designer.cs">
       <DependentUpon>TCChamCong.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Conek\ThongTinUuDai.aspx.cs">
+      <DependentUpon>ThongTinUuDai.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Conek\ThongTinUuDai.aspx.designer.cs">
+      <DependentUpon>ThongTinUuDai.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Conek\ThongTinZalo.aspx.cs">
       <DependentUpon>ThongTinZalo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1599,6 +1606,7 @@
     <Content Include="Conek\DSNhanVien.aspx" />
     <Content Include="Conek\Error404.aspx" />
     <Content Include="Conek\TCChamCong.aspx" />
+    <Content Include="Conek\ThongTinUuDai.aspx" />
     <Content Include="Conek\ThongTinZalo.aspx" />
     <Content Include="Conek\TKGate3.aspx" />
     <Content Include="Conek\UuDaiSamsung.aspx" />
@@ -1794,6 +1802,7 @@
     <Content Include="Assets\Samsung_files\sqs.js.tải xuống" />
     <Content Include="Assets\Samsung_files\sqs_s.js.tải xuống" />
     <Content Include="Assets\Samsung_files\vn_responsive.js.tải xuống" />
+    <Content Include="Assets\Samsung_files\uudaisamsung.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

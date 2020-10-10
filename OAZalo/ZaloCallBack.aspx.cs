@@ -73,10 +73,10 @@ namespace OAZalo
                         try
                         {
                             //Ưu đãi Samsung
-                            if (strMessage == "#uudaisamsung")
-                            {
-                                traVeNutZalo("Xem ưu đãi Samsung", "Ưu đãi Samsung", "https://zalo.onesms.vn/Conek/UuDaiSamsung.aspx" + "/" + fromuid + "$/", fromuid);
-                            }
+                            //if (strMessage == "#uudaisamsung")
+                            //{
+                            //    traVeNutZalo("Xem ưu đãi Samsung", "Ưu đãi Samsung", "https://zalo.onesms.vn/Conek/UuDaiSamsung.aspx" + "/" + fromuid + "$/", fromuid);
+                            //}
                             //Danh sách chấm công
                             if (strMessage == "#dschamcong")
                             {
