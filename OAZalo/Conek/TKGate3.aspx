@@ -68,7 +68,7 @@
                 <%}
                     else
                     { %>
-                <h5>Dữ liệu đang cập nhật</h5>
+                <h5><br><%= message%></h5>
                 <%} %>
             </div>
         </div>

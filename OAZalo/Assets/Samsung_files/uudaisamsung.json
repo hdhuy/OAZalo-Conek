@@ -1,0 +1,166 @@
+[
+  {  
+	"STT": "1",
+            "Group": "HHP",
+            "SanPham": "SM-A015FZRDXEV",
+            "MoTa": "Điện thoại Samsung Galaxy A01",
+	"Mau":[
+			{
+			"MauSac": "Đỏ",
+            "Gia": " 2,789,600 "
+			},
+			{
+			"Mau": "20201002",
+			"Gia": 16957,
+			}
+  		 ]
+   },
+  {  
+	"STT": "2",
+            "Group": "HHP",
+            "SanPham": "SM-A115FZBGXEV",
+            "MoTa": "Điện thoại Samsung Galaxy A11",
+	"Mau":[
+			{
+			"MauSac": "Xanh",
+            "Gia": " 3,690,000 "
+			},
+			{
+			"MauSac": "Đen",
+            "Gia": " 3,690,000 "
+			},
+			{
+			"MauSac": "Trắng",
+            "Gia": " 3,690,000 "
+			}
+  		 ]
+   },
+   {  
+	"STT": "5",
+            "Group": "HHP",
+            "SanPham": "SM-A515FZKWXXV",
+            "MoTa": "Điện thoại Samsung Galaxy A51 2019",
+	"Mau":[
+			{
+			"MauSac": "Đen",
+            "Gia": " 7,990,400 "
+			},
+  		 ]
+   },
+   {  
+	"STT": "6",
+            "Group": "HHP",
+            "SanPham": "SM-A715FZBEXXV",
+            "MoTa": "Điện thoại Samsung Galaxy A71",
+	"Mau":[
+			{
+			"MauSac": "Xanh",
+            "Gia": " 10,489,600 "
+			},
+			{
+			"MauSac": "Đen",
+            "Gia": " 10,489,600 "
+			},
+			{
+			"MauSac": "Bạc",
+            "Gia": " 10,489,600 "
+			},
+  		 ]
+   },
+   {  
+	"STT": "11",
+            "Group": "HHP",
+            "SanPham": "SM-G985FLBDXXV",
+            "MoTa": "Điện thoại Samsung Galaxy S20+ 128GB",
+	"Mau":[
+			{
+			"MauSac": "Xanh",
+            "Gia": " 23,989,900 "
+			},
+			{
+			"MauSac": "Xám",
+            "Gia": " 23,989,900 "
+			},
+			{
+			"MauSac": "Đen",
+            "Gia": " 23,989,900 "
+			},
+  		 ]
+   },
+   {  
+	"STT": "14",
+            "Group": "HHP",
+            "SanPham": "SM-G988BZAPXXV",
+            "MoTa": "Điện thoại Samsung Galaxy S20 Ultra 128GB",
+	"Mau":[
+			{
+			"MauSac": "Xám",
+            "Gia": " 29,990,400 "
+			},
+			{
+			"MauSac": "Đen",
+            "Gia": " 29,990,400 "
+			},
+  		 ]
+   },
+   {  
+	"STT": "16",
+            "Group": "HHP",
+            "SanPham": "SM-G780FZGGXXV",
+            "MoTa": "Điện thoại Samsung Galaxy S20 FE",
+	"Mau":[
+			{
+			"MauSac": "Xanh",
+            "Gia": " 15,990,000 "
+			},
+			{
+			"MauSac": "Tím",
+            "Gia": " 15,990,000 "
+			},
+			{
+			"MauSac": "Xanh đen",
+            "Gia": " 15,990,000 "
+			},
+  		 ]
+   },
+   {  
+	"STT": "21",
+            "Group": "HHP",
+            "SanPham": "SM-N985FZKGXXV",
+            "MoTa": "Điện thoại Samsung Galaxy Note20 Ultra",
+	"Mau":[
+			{
+			"MauSac": "Đen",
+            "Gia": " 29,990,000 "
+			},
+			{
+			"MauSac": "Đồng",
+            "Gia": " 29,990,000 "
+			},
+			{
+			"MauSac": "Trắng",
+            "Gia": " 29,990,000 "
+			},
+  		 ]
+   },
+   {  
+	"STT": "24",
+            "Group": "HHP",
+            "SanPham": "SM-N986BZNGXXV",
+            "MoTa": "Điện thoại Samsung Galaxy Note20 Ultra 5G",
+	"Mau":[
+			{
+			"MauSac": "Đen",
+            "Gia": " 29,990,000 "
+			},
+			{
+			"MauSac": "Đồng",
+            "Gia": " 29,990,000 "
+			},
+			{
+			"MauSac": "Trắng",
+            "Gia": " 29,990,000 "
+			},
+  		 ]
+   },
+]

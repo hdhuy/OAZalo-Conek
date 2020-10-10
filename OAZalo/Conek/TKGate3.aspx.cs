@@ -18,6 +18,7 @@ namespace OAZalo.Conek
         string tu_ngay = "";
         string den_ngay = "";
         string uid = "";
+        public string message = "Dữ liệu đang cập nhật...";
         public List<SanLuong> lstSanLuong = new List<SanLuong>();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,13 +26,13 @@ namespace OAZalo.Conek
             {
                 if (phanQuyen())
                 {
-                    rdTuNgay.SelectedDate = DateTime.Now;
+                    rdTuNgay.SelectedDate = DateTime.Now.AddDays(-1);
                     rdDenNgay.SelectedDate = DateTime.Now;
                     GetDataGate3TheoNgay();
                 }
                 else
                 {
-                    Response.Redirect("https://zalo.onesms.vn/Conek/Error404.aspx");
+                    message = "Bạn KHÔNG đủ quyền để xem thông tin này ! Vui lòng liên hệ quản trị viên";
                 }
             }
         }
@@ -56,7 +57,7 @@ namespace OAZalo.Conek
                     {
                         if (congty.Company.Equals("Conek"))
                         {
-                            if (congty.Position=="Chairman"|| congty.Position == "Interns")
+                            if (congty.Position=="Chairman")
                             {
                                 re = true;
                                 //
@@ -69,6 +70,7 @@ namespace OAZalo.Conek
         }
         private void GetDataGate3TheoNgay()
         {
+            message = "Dữ liệu đang cập nhật...";
             tu_ngay = Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyyMMdd");
             den_ngay = Convert.ToDateTime(rdDenNgay.SelectedDate).ToString("yyyyMMdd");
             using (HttpClient httpClient = new HttpClient())
@@ -95,10 +97,10 @@ namespace OAZalo.Conek
                             for (int i = 0; i < sanluong.data.Count; i++)
                             {
                                 var timesend = sanluong.data[i].time_send;
-                                string showDate=Convert.ToDateTime(rdTuNgay.SelectedDate).ToString("yyyy-MM-dd");
+                                string stringDate = timesend.Insert(4, "-").Insert(7, "-");
                                 lstSanLuong.Add(new SanLuong
                                 {
-                                    time_send = showDate,
+                                    time_send = stringDate,
                                     total_sms_cskh = sanluong.data[i].total_sms_cskh,
                                     total_sms_qc = sanluong.data[i].total_sms_qc,
                                 });
@@ -112,7 +114,14 @@ namespace OAZalo.Conek
 
         protected void btTimKiem_Click(object sender, EventArgs e)
         {
-            GetDataGate3TheoNgay();
+            if (phanQuyen())
+            {
+                GetDataGate3TheoNgay();
+            }
+            else
+            {
+                message = "Bạn KHÔNG đủ quyền để xem thông tin này ! Vui lòng liên hệ quản trị viên";
+            }
         }
     }
 }

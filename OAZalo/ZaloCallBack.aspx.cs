@@ -72,10 +72,10 @@ namespace OAZalo
                     {
                         try
                         {
-                            //Thông tin người click zalo
-                            //if (strMessage == "#ttzalo")
+                            //Ưu đãi Samsung
+                            //if (strMessage == "#uudaisamsung")
                             //{
-                            //    traVeNutZalo("Xem thông tin zalo của bạn", "Thông tin zalo", "https://zalo.onesms.vn/Conek/ThongTinZalo.aspx" + "/" + fromuid + "$/", fromuid);
+                            //    traVeNutZalo("Xem ưu đãi Samsung", "Ưu đãi Samsung", "https://zalo.onesms.vn/Conek/UuDaiSamsung.aspx" + "/" + fromuid + "$/", fromuid);
                             //}
                             //Danh sách chấm công
                             if (strMessage == "#dschamcong")
@@ -85,7 +85,7 @@ namespace OAZalo
                             //Thống kê gate 3
                             if (strMessage == "#tkg3")
                             {
-                                traVeNutZalo("Xem thống kê sản lượng gate 3", "Thống kê sản lượng gate 3", "https://zalo.onesms.vn/Conek/TKGate3.aspx/"+ fromuid + "$/", fromuid);
+                                traVeNutZalo("Xem thống kê sản lượng gate 3", "Thống kê sản lượng gate 3", "https://zalo.onesms.vn/Conek/ChonCongTy.aspx/"+ fromuid + "$sanluong$/", fromuid);
                             }
                             //Danh sách nhân viên
                             if (strMessage == "#nhansu")

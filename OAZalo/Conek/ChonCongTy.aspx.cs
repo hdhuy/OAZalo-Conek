@@ -43,7 +43,7 @@ namespace OAZalo.Conek
                             //chuyển trang dựa vào số lượng công ty
                             if (list.Count == 0)
                             {
-                                Response.Redirect("https://zalo.onesms.vn/Conek/DangKi.aspx/"+ uid + "$/");
+                                Response.Redirect("https://zalo.onesms.vn/Conek/DangKi.aspx/"+ uid + "$"+dichvu+"$");
                             }
                             else
                             {
@@ -60,6 +60,10 @@ namespace OAZalo.Conek
                                         Response.Redirect("https://zalo.onesms.vn/Conek/DSNhanVien.aspx/" + uid + "$" + ttct.Company + "$" + ttct.Department + "$" + ttct.Position + "$");
                                         //Response.Redirect("http://localhost:44388/Conek/DSNhanVien.aspx" + "/" + uid + "$" + ttct.Company + "$$" + ttct.Department + "$$$" + ttct.Position + "$$$$");
                                     }
+                                    else if (dichvu.Equals("sanluong"))
+                                    {
+                                        Response.Redirect("https://zalo.onesms.vn/Conek/TKGate3.aspx/" + uid + "$");
+                                     }
                                 }
                                 else
                                 {
